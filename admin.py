@@ -43,35 +43,114 @@ app.secret_key = 'secret'
 
 
 HTML_TEXT = '''
- <html>
+ <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
 <body style="font-size: 22px;background:#BDD5C8 ;background-size: cover;">
-        <table id="content" cellpadding="10" style="width: 990px;max-width: 990px;min-height: 570px;background: #C4C2C2;margin: 100px auto;border-radius: 20px;overflow: hidden">
-<tr style="border-radius: 20px;">
-	<td valign="middle" colspan="2" style="height: 70px;background: #C4C2C2">
-    <form method="post" action="#">
-      <h1 style="color:black; text-align:center;">Add New story</h1> <br>
-            <ul style="width: auto;height: auto ;margin-left: 200px;">
-            <label for='title' >Title:</label><br>
-            <input type="text" name="title" id='title' style="width: 70%; padding: 12px; border: 1px solid #ccc; border-radius: 4px;"><br><hr>
-            <label for='story' >Content:</label><br>
-            <textarea name='content' placeholder="Enter content here ....." style="width: 510px;height: 150px;padding: 12px 20px;box-sizing: border-box;border: 2px solid #ccc;border-radius: 4px;background-color: #f8f8f8;font-size: 16px;resize: none;"></textarea><br> <hr>
-            <label for="picture" >Upload story picture:</label><br>
-            <input type="file" name='picture' id="picture"><br><hr>
-            
-       <br /><br /><br />
+    <table id="content" cellpadding="10"
+        style="width: 990px;max-width: 990px;min-height: 570px;background: #C4C2C2;margin: 100px auto;border-radius: 20px;overflow: hidden">
+        <tr style="border-radius: 20px;">
+            <td valign="middle" colspan="2" style="height: 70px;background: #C4C2C2">
 
-      <input  onClick="alert('Added successfully')" style="height:50px;width:150px; font-size: 20px;margin-left: 10%;" type="submit" value="approve" >
-      <input  onClick="alert('story is cancelled')" style="height:50px;width:150px; font-size: 20px;margin-left: 15%;" type="Reset" value="cancel" >
+                <form id="form">
+                    <h1 style="color:black; text-align:center;">Add New story</h1> <br>
+                    <ul style="width: auto;height: auto ;margin-left: 200px;">
+                        <label for='title'>Title:</label><br>
+                        <input type="text" name="title" id='title'
+                            style="width: 70%; padding: 12px; border: 1px solid #ccc; border-radius: 4px;"><br>
+                        <hr>
+                        <label for='story'>Content:</label><br>
+                        <textarea id="textarea" name='content' placeholder="Enter content here ....."
+                            style="width: 510px;height: 150px;padding: 12px 20px;box-sizing: border-box;border: 2px solid #ccc;border-radius: 4px;background-color: #f8f8f8;font-size: 16px;resize: none;">
+                        </textarea><br>
+                        <hr>
+                        <label for="picture">Upload story picture:</label><br>
+                        <input type="file" name='picture' id="picture" id="picture" /><br>
+                        <hr>
+
+                        <br /><br /><br />
+
+                        <input style="height:50px;width:150px; font-size: 20px;margin-left: 10%;" type="submit"
+                            value="approve">
+                        <input onClick="alert('story is cancelled')"
+                            style="height:50px;width:150px; font-size: 20px;margin-left: 15%;" type="Reset"
+                            value="cancel">
 
 
-</ul>
-            </form>
-	</td>
-</tr>
-</table>
-    
-    </body>
-    </html>
+                    </ul>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js'
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js"
+        const firebaseConfig = {
+            apiKey: "AIzaSyBnfysAmG61EMzUaFX4IijdPGo2R4ZNh7E",
+            authDomain: "car-part-s.firebaseapp.com",
+            projectId: "car-part-s",
+            storageBucket: "car-part-s.appspot.com",
+            messagingSenderId: "820478729585",
+            appId: "1:820478729585:web:0550ca3781848a92f86ad0",
+            measurementId: "G-6RFSYMRRHV"
+        };
+        const app = initializeApp(firebaseConfig);
+        const storage = getStorage(app, "gs://car-part-s.appspot.com");
+
+
+        console.log("script2");
+
+
+        document.getElementById("form").addEventListener("submit", uploadFile);
+        function uploadFile(event) {
+
+            event.preventDefault()
+
+            const picture = document.getElementById("picture");
+
+            console.log("picture: ", picture.files[0]);
+
+            const storageRef = ref(storage, `${new Date().getTime()}-${picture.files[0].name}`);
+            uploadBytes(storageRef, picture.files[0]).then((snapshot) => {
+
+                console.log('Uploaded a blob or file!', snapshot);
+
+                getDownloadURL(storageRef).then((url) => {
+
+                    console.log(url);
+
+                    const title = document.getElementById("title").value
+                    const content = document.getElementById("textarea").value
+                    const picture = url;
+
+                    const form = new FormData();
+                    form.append('title', title);
+                    form.append('content', content);
+                    form.append('picture', picture);
+
+                    axios.post("/Add", form).then(response => {
+
+                        console.log(response.data);
+                        alert("Post Added Successfully");
+                    }).catch(e => {
+                        console.log(e);
+                        alert("Failed to add, check developer logs");
+                    })
+                })
+            });
+        }
+    </script>
+</body>
+</html>
     '''
     
 # In[3]:
@@ -183,6 +262,9 @@ def hello():
     dict1['content'] = request.form.get("content")
     dict1['title'] = request.form.get("title")    
     dict1['moral'] = request.form.get("moral")
+    dict1['picture'] = request.form.get("picture")
+
+    print(dict1)
 
     # dict1['moral'] = prediction(request.form.get("content")) 
 
@@ -202,7 +284,7 @@ def hello():
 # In[ ]:
 #please open collab file 
 if __name__ == "__main__":
-    app.run()
+    app.run(port=5001)
 
 
 # In[ ]:
