@@ -2,3 +2,7 @@ firebase-admin
 flask
 pyrebase4
 pycryptodome
+torch
+transformers
+pandas
+numpy

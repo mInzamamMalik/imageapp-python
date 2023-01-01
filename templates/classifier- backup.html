@@ -1,0 +1,62 @@
+<html>
+
+
+<body style="font-size: 22px;background:#BDD5C8 ;background-size: cover;">
+    <table id="tbl_content" cellpadding="10"
+        style="width: 990px;max-width: 990px;min-height: 570px;background: #C4C2C2;margin: 100px auto;border-radius: 20px;overflow: hidden">
+        <tr style="border-radius: 20px;">
+            <td valign="middle" colspan="2" style="height: 70px;background: #C4C2C2">
+                <form method="post" action="{{url_for('save_Data')}}">
+                    <h1 style="color:black; text-align:center;">Add New story</h1> <br>
+                    <ul style="width: auto;height: auto ;margin-left: 200px;">
+                        <label for='title'>Title:</label><br>
+                        <input type="text" name="title" id='title'
+                            style="width: 70%; padding: 12px; border: 1px solid #ccc; border-radius: 4px;"><br>
+                        <hr>
+                        <label for='story'>Content:</label><br>
+                        <textarea name='content' id="content" placeholder="Enter content here ....."
+                            style="width: 510px;height: 150px;padding: 12px 20px;box-sizing: border-box;border: 2px solid #ccc;border-radius: 4px;background-color: #f8f8f8;font-size: 16px;resize: none;"></textarea><br>
+                        <hr>
+                        <label for="picture">Upload story picture:</label><br>
+                        <input type="file" name='picture' id="picture"><br>
+                        <hr>
+                        <input id="classify" type="button" name="classify" value="classify">
+
+                        <label for='moral'>The moral of this story is: </label><br>
+                        <input readonly type="text" name='moral' id='moral'>
+                        <br /><br /><br />
+
+                        <input onClick="alert('Added successfully')"
+                            style="height:50px;width:150px; font-size: 20px;margin-left: 10%;" type="submit"
+                            value="approve" name="approve">
+                        <input onClick="alert('story is cancelled')"
+                            style="height:50px;width:150px; font-size: 20px;margin-left: 15%;" type="Reset"
+                            value="cancel">
+
+
+                    </ul>
+                </form>
+            </td>
+        </tr>
+    </table>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $('#classify').on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '/Add_pred',
+                data: {
+                    content: $("#content").val()
+                },
+                success: function (e) {
+                    $('#moral').val(e)
+                },
+
+            })
+        });
+    </script>
+</body>
+
+</html>
