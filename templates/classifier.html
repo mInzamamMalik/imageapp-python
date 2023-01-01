@@ -38,16 +38,16 @@
 
                         <input style="height:50px;width:150px; font-size: 20px;margin-left: 10%;" type="submit"
                             value="approve">
-                           
+
                         <!-- <input onclick="myFunction()"
                             style="height:50px;width:150px; font-size: 20px;margin-left: 15%;" type="Reset"
                             value="cancel"> -->
-                            
+
 
 
                     </ul>
                 </form>
-                <button Onclick="myFunction()" >cancel</button>
+                <button Onclick="myFunction()">cancel</button>
             </td>
         </tr>
     </table>
@@ -56,6 +56,13 @@
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js'
         import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js"
+        import {
+            getFirestore, collection,
+            addDoc, getDocs, doc,
+            onSnapshot, query, serverTimestamp,
+            orderBy, deleteDoc, updateDoc, where
+        } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+
         const firebaseConfig = {
             apiKey: "AIzaSyDJ5ufCbJFmYd7ZLPxpDzJ-bHn6_5up_tE",
             authDomain: "read-me-a-story3.firebaseapp.com",
@@ -68,6 +75,8 @@
         };
         const app = initializeApp(firebaseConfig);
         const storage = getStorage(app, "gs://read-me-a-story3.appspot.com");
+        const db = getFirestore(app);
+
 
 
         console.log("script2");
@@ -87,29 +96,46 @@
 
                 console.log('Uploaded a blob or file!', snapshot);
 
-                getDownloadURL(storageRef).then((url) => {
+                getDownloadURL(storageRef).then(async (url) => {
 
                     console.log(url);
 
                     const title = document.getElementById("title").value
+                    const titleSmall = title.toLowerCase();
                     const content = document.getElementById("textarea").value
                     const picture = url;
 
                     const form = new FormData();
+                    form.append('titleSmall', titleSmall);
                     form.append('title', title);
                     form.append('content', content);
                     form.append('picture', picture);
                     form.append('moral', document.querySelector("#moral").innerHTML);
 
-                    axios.post("/Save_data", form).then(response => {
+                    // const querySnapshot = await getDocs(collection(db, "posts"));
+                    const citiesRef = collection(db, "books");
+                    const q = query(citiesRef, where("titleSmall", "==", titleSmall));
+                    const querySnapshot = await getDocs(q);
 
-                        console.log(response.data);
-                        alert("story Added Successfully");
-                    }).catch(e => {
-                        console.log(e);
-                        alert("Failed to add");
-                    })
-                })
+                    if (querySnapshot.size === 0) { // no duplicate found
+                        axios.post("/Save_data", form).then(response => {
+
+                            console.log(response.data);
+                            alert("story Added Successfully");
+                        }).catch(e => {
+                            console.log(e);
+                            alert("Failed to add");
+                        })
+
+                    }else{
+                        let confirmAction = confirm("Title is already in database, Are you sure to execute this action?");
+                        // Rest of the logic goes here
+                    }
+
+
+
+
+                });
             });
         }
 
@@ -134,19 +160,19 @@
 
     </script>
     <script>
-     
-        
-            function myFunction() {
-        let confirmAction = confirm("Are you sure to execute this action?");
-        if (confirmAction) {
-            location.reload();
-        } else {
-          return false;
-        }
-      }
-     
-    
-        </script>
+
+
+        // function myFunction() {
+        //     let confirmAction = confirm("Are you sure to execute this action?");
+        //     if (confirmAction) {
+        //         location.reload();
+        //     } else {
+        //         return false;
+        //     }
+        // }
+
+
+    </script>
 </body>
 
 </html>
