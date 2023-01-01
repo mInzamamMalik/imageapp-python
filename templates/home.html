@@ -2,12 +2,50 @@
 <head>
     <title> Login</title>
 </head>
-<body style="font-size: 22px;background:#BDD5C8 ;background-size: cover;">
+<header>
     
-    <table id="content" cellpadding="10" style="width: 990px;max-width: 990px;min-height: 570px;background: #C4C2C2;margin: 100px auto;border-radius: 20px;overflow: hidden">
-
-        <tr style="border-radius: 20px;">
-            <td valign="middle" colspan="2" style="height: 70px;background: #C4C2C2">
+    
+    
+   
+    
+    </header>
+    <style>
+        #content {
+	width: 990px;
+	max-width: 990px;
+	min-height: 570px;
+	background: #dbcaba;
+	margin: 100px auto;
+	border-radius: 20px;
+	overflow: hidden
+}
+    
+header img {
+        float: left;
+        width:150px;
+        height: 9100x;
+        border-radius: 20px;
+        padding: 2px;
+          
+        }
+        #logo {
+            width:100px;
+            height: 100px;
+            border-radius: 20px;
+        }</style>
+<body style="font-size: 22px; background-image: url('https://images.unsplash.com/photo-1588580000645-4562a6d2c839?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80')  ;background-size: cover;">
+    
+    <table id="content" cellpadding="10" style="border: 1px solid #C69A6F;">
+        <tr>
+            <td  align="left">
+              <img src="{{url_for('static', filename='logo.png')}}" style="float: center; width:200px; height: 9100x; border-radius: 20px;
+              padding: 2px;
+                " />
+            </td>
+              
+            </tr>
+        <tr>
+            <td>
         
     <form action='/' method='POST' >
         <h1 style="color:black; text-align:center;">Admin Login</h1> <br>
@@ -15,7 +53,17 @@
         Email: <input type='text' name='email' style="width: 70%; padding: 12px; border: 1px solid #ccc; border-radius: 4px;"><br><hr>
 
         Password: <input type='password' name='password' style="width: 70%; padding: 12px; border: 1px solid #ccc; border-radius: 4px;"><br><hr>
-        <input  style="height:50px;width:150px; font-size: 20px;margin-left: 10%;" type="submit" >
+        <input  valu="Login" style="height:50px;width:150px; font-size: 20px;margin-left: 10%;background: #C69A6F;
+        line-height: 30px;
+        padding: 20px 40px;
+        font-size: 24px;
+        color: white;
+        text-decoration: none;
+        border-radius: 10px;
+      margin: 4px 2px;
+              cursor: pointer;
+              -webkit-transition-duration: 0.4s; /* Safari */
+              transition-duration: 0.4s;" type="submit"  >
         
           
     </ul>
@@ -26,6 +74,10 @@
 </tr>
 </table>
 
+    
+    
+</body>
+</html>
     
     
 </body>
