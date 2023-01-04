@@ -1,7 +1,6 @@
-
 <html>
-  <head>
-    <title> Options</title>
+<head> <title> Delete</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <header>
  
@@ -35,9 +34,9 @@
           gap: 50px;
 }
       #content {
-	width: 990px;
-	max-width: 990px;
-	min-height: 570px;
+	width: 2000px;
+	max-width: 2000px;
+	min-height: 1000px;
 	background: #dbcaba;
 	margin: 100px auto;
 	border-radius: 20px;
@@ -112,44 +111,23 @@
             border-radius: 20px;
         }</style>
 <body style="font-size: 22px; background-image: url('https://images.unsplash.com/photo-1588580000645-4562a6d2c839?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80')  ;background-size: cover;">
-        <table id="content" cellpadding="10" style="border: 5px solid #C69A6F;">
-          
-
-            <tr>
-            <td  align="left">
-              <img src="{{url_for('static', filename='logo.png')}}" style="float: center; width:200px; height: 9100x; border-radius: 20px;
+  <br> <br>
+    <main style="background: #dbcaba;">
+      <img src="{{url_for('static', filename='logo.png')}}" style="float: center; width:200px; height: 9100x; border-radius: 20px;
               padding: 2px;
                 " />
-           
-            
-              
+       <h1 style="color:#a8703b; text-align:center;">Delete</h1>
+       <input type="text" placeholder="Search.." name="search2">
+  <button type="submit"><i class="fa fa-search"></i></button>
+       {% with messages = get_flashed_messages(category_filter=["category2"]) %}
+            {% if messages %}
+                {% for message in messages %}
+                    <h3 style="color:white;  background: #C69A6F;">{{ message }}</h3> 
+                {% endfor %}
+            {% endif %}
+        {% endwith %} 
 
-    
-    <form action="#">
-      <tr>
-        <td>
-      <h1 style="color:#a8703b; text-align:center;">Options</h1> <br>
-            <ul style="width: auto;height: auto ;margin-left: 200px;">
-          
-                <button class="button button2">  <a href="{{ url_for('hello') }}" > Add</a> </button>
-                <button class="button button2">  <a href="{{ url_for('edit') }}" > Edit</a> </button>
-                <button class="button button2">  <a href="{{ url_for('delete') }}" > Delete</a> </button>
-           
-
-
-</ul>
-            </form>
-           
-	</td>
-</tr>
-
-
-</td>
-	</tr>
-</table>
-    
+        
+    </main>
     </body>
-   
-    </html>
-
-   
+    </html>

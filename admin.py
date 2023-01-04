@@ -14,7 +14,7 @@ from flask import Flask, session, render_template, request, redirect
 import firebase_admin
 from firebase_admin import db
 from firebase_admin import credentials
-from flask import Flask, request, url_for
+from flask import Flask, request, url_for ,flash , jsonify 
 from firebase_admin import firestore
 import pyrebase
 
@@ -27,6 +27,9 @@ default_app = firebase_admin.initialize_app(cred_object, {
 
 
 app = Flask(__name__)
+
+db = firestore.client()
+todo_ref = db.collection(u'books')
 
 config = {
     'apiKey': "AIzaSyA9f97gGu55wjvB7Nsr75VJHFm71w1b7p0",
@@ -129,7 +132,7 @@ def index():
             session['user'] = email
             return redirect(url_for('options'))
         except:
-            return 'Failed to login'
+            flash('Email or Password is incorrect')
     return render_template('home.html')
 # log out
 
@@ -144,6 +147,57 @@ def logout():
 def options():
     return render_template('options.html')
 
+# edit 
+
+@app.route('/Edit', methods =["GET","POST"])
+def edit():
+        
+        todo_id = request.args.get('id')  
+        if todo_id:
+         todo = todo_ref.document(todo_id).get(field_paths={'title'})
+         return jsonify(todo.to_dict()), 200
+        else:
+       
+          docs = todo_ref.stream()
+          for doc in docs:
+            title = u'{}'.format(doc.to_dict()['title'])
+            flash(title, 'category2')
+        
+        return render_template('edit.html')
+
+        #edit-form
+@app.route('/editform', methods=["GET", "POST"])
+def editform():
+    return render_template('edit-form.html')
+
+
+    #delete
+@app.route('/Delete', methods =["GET","POST"])
+def delete():
+        #db_store = firestore.client()
+        #users_ref = db_store.collection(u'books')
+        #docs = users_ref.stream()
+    #checklength1 = '<ul>'
+    #for doc in docs:
+     #   checklength1 += '<li>' + doc.title + '</li>'
+    #checklength1 += '</ul>'
+    #register = db.child("books").child("title").get()
+    #registerList = register.val()
+        todo_id = request.args.get('id')  
+        if todo_id:
+         todo = todo_ref.document(todo_id).get(field_paths={'title'})
+         return jsonify(todo.to_dict()), 200
+        else:
+       # all_todos = [doc.get({u'title'}).to_dict() for doc in todo_ref]
+       # for doc in all_todos:
+        #    print(all_todos.get({u'title'}))
+       # return jsonify(all_todos), 200
+          docs = todo_ref.stream()
+          for doc in docs:
+            title = u'{}'.format(doc.to_dict()['title'])
+            flash(title, 'category2')
+        #return jsonify(title)
+        return render_template('delete.html')
 # add
 
 
@@ -154,25 +208,32 @@ def hello():
 
 @app.route('/Save_data', methods=['GET', 'POST'])
 def save_Data():
+ if request.form['action1'] == 'approve':
     db_store = firestore.client()
-    users_ref = db_store.collection(u'books')
-    docs = users_ref.stream()
-    checklength = []
-    for doc in docs:
-        checklength.append(doc)
-
     print(request.form)
     dict1 = {}
-    dict1['titleSmall'] = request.form.get("titleSmall")
     dict1['title'] = request.form.get("title")
     dict1['content'] = request.form.get("content")
     dict1['picture'] = request.form.get("picture")
     dict1['moral'] = request.form.get("moral")  # this shows overload error
 
-    doc_ref = db_store.collection(u'books').document(
-        u''+str(len(checklength)+1))
-    doc_ref.set(dict1)
+    db_store.collection(u'books').add(dict1)
     return "save sucessfully"
+
+
+ elif request.form['action'] == 'cancel':
+    db_store = firestore.client()
+    print(request.form)
+    dict1 = {}
+    dict1['title'] = request.form.get("title")
+    dict1['content'] = request.form.get("content")
+    dict1['picture'] = request.form.get("picture")
+    dict1['moral'] = request.form.get("moral")  # this shows overload error
+
+    db_store.collection(u'canceledStories').add(dict1)
+    return "canceled sucessfully"
+
+
 
 
 @app.route('/Add_pred', methods=['GET', 'POST'])

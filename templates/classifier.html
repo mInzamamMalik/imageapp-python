@@ -8,14 +8,127 @@
     <title>Document</title>
 </head>
 
-<body style="font-size: 22px;background:#BDD5C8 ;background-size: cover;">
-    <table id="content" cellpadding="10"
-        style="width: 990px;max-width: 990px;min-height: 570px;background: #C4C2C2;margin: 100px auto;border-radius: 20px;overflow: hidden">
-        <tr style="border-radius: 20px;">
-            <td valign="middle" colspan="2" style="height: 70px;background: #C4C2C2">
+<header>
+ 
+    
+    
+    <div id="header" style="border-radius: 20px;"> 
+        
+        <nav class="topnav">
+        
+          <a href="{{ url_for('hello') }}" >Add story</a></li>
+            <a href="Employee Log-in.php">Edit story</a></li>
+            <a href="{{ url_for('delete') }}">Delete story</a></li>
+            <a href="{{ url_for('logout') }}" >Logout</a></li>
+        
+    </div>
+    
+    </header>
+    <style>
+      .button2  {
+	background: #C69A6F;
+	line-height: 30px;
+	padding: 20px 40px;
+	font-size: 24px;
+	color: white;
+	text-decoration: none;
+	border-radius: 10px;
+  margin: 4px 2px;
+          cursor: pointer;
+          -webkit-transition-duration: 0.4s; /* Safari */
+          transition-duration: 0.4s;
+          gap: 50px;
+}
+      #content {
+	width: 990px;
+	max-width: 990px;
+	min-height: 570px;
+	background: #dbcaba;
+	margin: 100px auto;
+	border-radius: 20px;
+	overflow: hidden
+}
 
-                <form id="form">
-                    <h1 style="color:black; text-align:center;">Add New story</h1> <br>
+        
+        
+        .button2:hover {
+          box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+        }
+        
+        nav {
+          display: flex;
+          justify-content: center;
+          
+          font-size: 1em;
+          flex-wrap: wrap;
+          width: 100%;
+          
+        }
+        
+        nav.topnav a {
+          
+          padding: 8px 25px;
+            text-decoration: none;
+            font-size: 17px;
+            background: #C69A6F;
+            border-radius: 20px;
+            color: aliceblue;
+            
+            
+        }
+        
+        nav.topnav a:hover {
+          background-color: #C69A6F;
+          color: black;
+        }
+        nav.topnav {
+          overflow: hidden;
+          background:#C69A6F;
+          
+          
+        }
+        
+        #logo {
+            width:1000px;
+            height: 1000px;
+            border-radius: 20px;
+        }
+        
+        
+        .navs {
+            list-style: none;
+        }
+        
+        .navs li {
+            display: inline-table;
+        }
+        
+        .navs li a {
+            text-align: center;
+            padding: 10px 30px;
+            text-decoration: none;
+            font-size: 20px;
+            background: #C69A6F;
+            border-radius: 20px;
+            color: aliceblue
+        }#logo {
+            width:1000px;
+            height: 1000px;
+            border-radius: 20px;
+        }</style>
+<body style="font-size: 22px; background-image: url('https://images.unsplash.com/photo-1588580000645-4562a6d2c839?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80')  ;background-size: cover;">
+        <table id="content" cellpadding="10" style="border: 5px solid #C69A6F;">
+          
+
+            <tr>
+            <td  align="left">
+              <img src="{{url_for('static', filename='logo.png')}}" style="float: center; width:200px; height: 9100x; border-radius: 20px;
+              padding: 2px;
+                " />
+            
+
+                <form id="form" action="{{url_for('save_Data')}}">
+                    <h1 style="color:#C69A6F; text-align:center;">Add New story</h1> <br>
                     <ul style="width: auto;height: auto ;margin-left: 200px;">
                         <label for='title'>Title:</label><br>
                         <input type="text" name="title" id='title'
@@ -26,28 +139,26 @@
                             style="width: 510px;height: 150px;padding: 12px 20px;box-sizing: border-box;border: 2px solid #ccc;border-radius: 4px;background-color: #f8f8f8;font-size: 16px;resize: none;">
                         </textarea><br>
 
-                        <button id="classifyButton">classify content</button>
-                        <span id="moral"></span>
+                        <button  id="classifyButton">classify content</button><br> <br>
+                        <span style="font-weight: bold; background-color: #C69A6F;" id="moral"></span>
 
                         <hr>
                         <label for="picture">Upload story picture:</label><br>
                         <input type="file" name='picture' id="picture" id="picture" /><br>
                         <hr>
-
+                        <input type="hidden" name='id' id="id" />
                         <br /><br /><br />
 
-                        <input style="height:50px;width:150px; font-size: 20px;margin-left: 10%;" type="submit"
-                            value="approve">
+                        <input style="float: right;" class="button button2" type="submit"
+                            value="approve" name="action1">
 
-                        <!-- <input onclick="myFunction()"
-                            style="height:50px;width:150px; font-size: 20px;margin-left: 15%;" type="Reset"
-                            value="cancel"> -->
+                        <input style="height:50px;width:150px; font-size: 20px;margin-left: 15%;" type="submit" value="cancel" name="action" >
 
-
+                           
 
                     </ul>
                 </form>
-                <button Onclick="myFunction()">cancel</button>
+                <!-- <button Onclick="myFunction()" style="float: left;"  id="cancel" class="button button2" > cancel</button> -->
             </td>
         </tr>
     </table>
@@ -159,17 +270,19 @@
         }, false);
 
     </script>
+
+    <!-- cancel script -->
     <script>
-
-
-        // function myFunction() {
-        //     let confirmAction = confirm("Are you sure to execute this action?");
-        //     if (confirmAction) {
-        //         location.reload();
-        //     } else {
-        //         return false;
-        //     }
-        // }
+        
+          
+         function myFunction() {
+             let confirmAction = confirm("Are you sure to execute this action?");
+             if (confirmAction) {
+                location.reload();
+             } else {
+                 return false;
+             }
+         }
 
 
     </script>
