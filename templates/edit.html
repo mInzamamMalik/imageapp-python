@@ -218,6 +218,7 @@
       const title = document.getElementById('editTitle').value
 
       document.getElementById(id).innerHTML += 'updating...';
+      document.getElementById('editTitle').value = title
 
       updateDoc(doc(db, "books", id), {
         title: title
