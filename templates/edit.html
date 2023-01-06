@@ -1,136 +1,165 @@
-
 <html>
-    <head> <title> Edit</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    </head>
-    <header>
-     
-        
-        
-        <div id="header" style="border-radius: 20px;"> 
-            
-            <nav class="topnav">
-            
-              <a href="{{ url_for('hello') }}" >Add story</a></li>
-                <a href="Employee Log-in.php">Edit story</a></li>
-                <a href="{{ url_for('delete') }}">Delete story</a></li>
-                <a href="{{ url_for('logout') }}" >Logout</a></li>
-            
-        </div>
-        
-        </header>
-        <style>
-          .button2  {
-        background: #C69A6F;
-        line-height: 30px;
-        padding: 20px 40px;
-        font-size: 24px;
-        color: white;
-        text-decoration: none;
-        border-radius: 10px;
-      margin: 4px 2px;
-              cursor: pointer;
-              -webkit-transition-duration: 0.4s; /* Safari */
-              transition-duration: 0.4s;
-              gap: 50px;
-    }
-          #content {
-        width: 2000px;
-        max-width: 2000px;
-        min-height: 1000px;
-        background: #dbcaba;
-        margin: 100px auto;
-        border-radius: 20px;
-        overflow: hidden
-    }
-    
-            
-            
-            .button2:hover {
-              box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
-            }
-            
-            nav {
-              display: flex;
-              justify-content: center;
-              
-              font-size: 1em;
-              flex-wrap: wrap;
-              width: 100%;
-              
-            }
-            
-            nav.topnav a {
-              
-              padding: 8px 25px;
-                text-decoration: none;
-                font-size: 17px;
-                background: #C69A6F;
-                border-radius: 20px;
-                color: aliceblue;
-                
-                
-            }
-            
-            nav.topnav a:hover {
-              background-color: #C69A6F;
-              color: black;
-            }
-            nav.topnav {
-              overflow: hidden;
-              background:#C69A6F;
-              
-              
-            }
-            
-            #logo {
-                width:1000px;
-                height: 1000px;
-                border-radius: 20px;
-            }
-            
-            
-            .navs {
-                list-style: none;
-            }
-            
-            .navs li {
-                display: inline-table;
-            }
-            
-            .navs li a {
-                text-align: center;
-                padding: 10px 30px;
-                text-decoration: none;
-                font-size: 20px;
-                background: #C69A6F;
-                border-radius: 20px;
-                color: aliceblue
-            }#logo {
-                width:1000px;
-                height: 1000px;
-                border-radius: 20px;
-            }
-            
-            </style>
-    <body style="font-size: 22px; background-image: url('https://images.unsplash.com/photo-1588580000645-4562a6d2c839?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80')  ;background-size: cover;">
-      <br> <br>
-        <main style="background: #dbcaba;">
-          <img src="{{url_for('static', filename='logo.png')}}" style="float: center; width:200px; height: 9100x; border-radius: 20px;
+
+<head>
+  <title> Edit</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<header>
+
+
+
+  <div id="header" style="border-radius: 20px;">
+
+    <nav class="topnav">
+
+      <a href="{{ url_for('hello') }}">Add story</a></li>
+      <a href="Employee Log-in.php">Edit story</a></li>
+      <a href="{{ url_for('delete') }}">Delete story</a></li>
+      <a href="{{ url_for('logout') }}">Logout</a></li>
+
+  </div>
+
+</header>
+<style>
+  .button2 {
+    background: #C69A6F;
+    line-height: 30px;
+    padding: 20px 40px;
+    font-size: 24px;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s;
+    /* Safari */
+    transition-duration: 0.4s;
+    gap: 50px;
+  }
+
+  #content {
+    width: 2000px;
+    max-width: 2000px;
+    min-height: 1000px;
+    background: #dbcaba;
+    margin: 100px auto;
+    border-radius: 20px;
+    overflow: hidden
+  }
+
+
+
+  .button2:hover {
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  }
+
+  nav {
+    display: flex;
+    justify-content: center;
+
+    font-size: 1em;
+    flex-wrap: wrap;
+    width: 100%;
+
+  }
+
+  nav.topnav a {
+
+    padding: 8px 25px;
+    text-decoration: none;
+    font-size: 17px;
+    background: #C69A6F;
+    border-radius: 20px;
+    color: aliceblue;
+
+
+  }
+
+  nav.topnav a:hover {
+    background-color: #C69A6F;
+    color: black;
+  }
+
+  nav.topnav {
+    overflow: hidden;
+    background: #C69A6F;
+
+
+  }
+
+  #logo {
+    width: 1000px;
+    height: 1000px;
+    border-radius: 20px;
+  }
+
+
+  .navs {
+    list-style: none;
+  }
+
+  .navs li {
+    display: inline-table;
+  }
+
+  .navs li a {
+    text-align: center;
+    padding: 10px 30px;
+    text-decoration: none;
+    font-size: 20px;
+    background: #C69A6F;
+    border-radius: 20px;
+    color: aliceblue
+  }
+
+  #logo {
+    width: 1000px;
+    height: 1000px;
+    border-radius: 20px;
+  }
+</style>
+
+<body
+  style="font-size: 22px; background-image: url('https://images.unsplash.com/photo-1588580000645-4562a6d2c839?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80')  ;background-size: cover;">
+  <br> <br>
+  <main style="background: #dbcaba;">
+    <img src="{{url_for('static', filename='logo.png')}}" style="float: center; width:200px; height: 9100x; border-radius: 20px;
                   padding: 2px;
-                    " />
-           <h1 style="color:#a8703b; text-align:center;">Edit</h1> 
-           <input type="text" placeholder="Search.." name="search2">
-  <button type="submit"><i class="fa fa-search"></i></button>
-           {% with messages = get_flashed_messages(category_filter=["category2"]) %}
-                {% if messages %}
-                    {% for message in messages %}
-                        <h3 style="color:white;  background: #C69A6F;"> <a href="{{ url_for('editform') }}" >{{ message }}</a></h3>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %} 
-    
-            
-        </main>
-        </body>
-        </html>
+                    "   />
+    <h1 style="color:#a8703b; text-align:center;">Edit</h1>
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+    {% with messages = get_flashed_messages(category_filter=["category2"]) %}
+    {% if messages %}
+    {% for message in messages %}
+    <ul id="myUL">
+      <li style="color:white;  background: #C69A6F;"><a href="{{ url_for('editform') }}">{{ message }}</a> </li>
+    </ul>
+
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+
+  </main>
+  <script>
+    function myFunction() {
+      var input, filter, ul, li, a, i, txtValue;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      ul = document.getElementById("myUL");
+      li = ul.getElementsByTagName("li");
+      for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("a")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          li[i].style.display = "";
+        } else {
+          li[i].style.display = "none";
+        }
+      }
+    }
+  </script>
+</body>
+    
+
+</html>
