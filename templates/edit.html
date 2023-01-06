@@ -117,6 +117,12 @@
     height: 1000px;
     border-radius: 20px;
   }
+
+  .post {
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid black;
+  }
 </style>
 
 <body
@@ -128,7 +134,10 @@
                     "   />
     <h1 style="color:#a8703b; text-align:center;">Edit</h1>
     <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
-    {% with messages = get_flashed_messages(category_filter=["category2"]) %}
+
+
+
+    <!-- {% with messages = get_flashed_messages(category_filter=["category2"]) %}
     {% if messages %}
     {% for message in messages %}
     <ul id="myUL">
@@ -137,10 +146,88 @@
 
     {% endfor %}
     {% endif %}
-    {% endwith %}
+    {% endwith %} -->
+
+    <div id="stories"></div>
 
 
   </main>
+
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js'
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js"
+    import {
+      getFirestore, collection,
+      addDoc, getDocs, doc,
+      onSnapshot, query, serverTimestamp,
+      orderBy, deleteDoc, updateDoc, where
+    } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDJ5ufCbJFmYd7ZLPxpDzJ-bHn6_5up_tE",
+      authDomain: "read-me-a-story3.firebaseapp.com",
+      databaseURL: "https://read-me-a-story3-default-rtdb.firebaseio.com",
+      projectId: "read-me-a-story3",
+      storageBucket: "read-me-a-story3.appspot.com",
+      messagingSenderId: "345183958137",
+      appId: "1:345183958137:web:3d25a61eaa5ccb6e2ad0a8",
+      measurementId: "G-6F6BFMV1KW"
+    };
+    const app = initializeApp(firebaseConfig);
+    const storage = getStorage(app, "gs://read-me-a-story3.appspot.com");
+    const db = getFirestore(app);
+
+
+    const getData = async () => {
+      const querySnapshot = await getDocs(collection(db, "books"));
+      let stories = document.querySelector("#stories");
+
+      querySnapshot.forEach((doc) => {
+        // console.log(`${doc.id} => `, doc.data());
+
+        stories.innerHTML += `
+          <div class="post" id="${doc.id}">
+
+            <img src='${doc.data()?.picture}' height="100px" />
+            <h3 class="title">
+              ${doc.data()?.title} <button onClick="editPost('${doc.id}','${doc.data()?.title}' )">Edit</button>
+            </h3>
+            <p>${doc.data()?.content}</p>
+          </div>
+          <br />
+          <br />
+        `;
+      });
+    }
+    getData();
+
+    window.editPost = (id, title) => {
+
+      if (document.getElementById('editForm')) return;
+
+      document.getElementById(id).innerHTML = `
+        <form id="editForm" onsubmit="completeEdit(); return false">
+        <input type="hidden" disabled type="text" name="title" id="editId" required value="${id}">
+        <input type="text" size="35" name="title" id="editTitle" required value="${title}">
+        <button>submit</button>
+      </form>`
+    }
+
+    window.completeEdit = () => {
+      const id = document.getElementById('editId').value
+      const title = document.getElementById('editTitle').value
+
+      document.getElementById(id).innerHTML += 'updating...';
+
+      updateDoc(doc(db, "books", id), {
+        title: title
+      }).then(() => {
+        location.reload();
+      });
+    }
+
+  </script>
+
   <script>
     function myFunction() {
       var input, filter, ul, li, a, i, txtValue;
@@ -160,6 +247,5 @@
     }
   </script>
 </body>
-    
 
 </html>
