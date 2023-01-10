@@ -133,8 +133,7 @@
                   padding: 2px;
                     "   />
     <h1 style="color:#a8703b; text-align:center;">Edit</h1>
-    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
-
+    <input type="text" id="searchTerm" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
 
 
     <!-- {% with messages = get_flashed_messages(category_filter=["category2"]) %}
@@ -149,6 +148,8 @@
     {% endwith %} -->
 
     <div id="stories"></div>
+
+
 
 
   </main>
@@ -190,9 +191,9 @@
 
             <img src='${doc.data()?.picture}' height="100px" />
             <h3 class="title">
-              ${doc.data()?.title} <button onClick="editPost('${doc.id}','${doc.data()?.title}' )">Edit</button>
+              ${doc.data()?.title}  <button onClick="editPost(\`${doc.id}\`,\`${doc.data()?.title}\`, \`${doc.data()?.content}\`, \`${doc.data()?.moral}\` )">Edit</button>
             </h3>
-            <p>${doc.data()?.content}</p>
+            <p>(${doc.data()?.moral}) - ${doc.data()?.content}</p>
           </div>
           <br />
           <br />
@@ -201,14 +202,30 @@
     }
     getData();
 
-    window.editPost = (id, title) => {
+    window.editPost = (id, title, content, moral) => {
 
       if (document.getElementById('editForm')) return;
 
       document.getElementById(id).innerHTML = `
         <form id="editForm" onsubmit="completeEdit(); return false">
-        <input type="hidden" disabled type="text" name="title" id="editId" required value="${id}">
-        <input type="text" size="35" name="title" id="editTitle" required value="${title}">
+        <input id="editId" type="hidden" disabled type="text" required value="${id}">
+        
+        
+        <label for="editTitle"> Title:</label> 
+        <input id="editTitle" type="text" size="35" required value="${title}">
+        
+        <br />
+        <label for="editContent"> Text:</label> 
+        <textarea id="editContent" cols="30" rows="10">${content}</textarea>
+        
+        <br />
+        <label for="editMoral"> Moral:</label> 
+        <input id="editMoral" type="text" size="35" required value="${moral}">
+        <br />
+        <label for="editPicture"> Picture:</label> 
+        <input id="editPicture" type="file">
+        <br />
+
         <button>submit</button>
       </form>`
     }
@@ -216,30 +233,33 @@
     window.completeEdit = () => {
       const id = document.getElementById('editId').value
       const title = document.getElementById('editTitle').value
+      const content = document.getElementById('editContent').value
+      const moral = document.getElementById('editMoral').value
 
       document.getElementById(id).innerHTML += 'updating...';
       document.getElementById('editTitle').value = title
 
       updateDoc(doc(db, "books", id), {
-        title: title
+        title: title,
+        titleSmall: title.toLowerCase(),
+        content: content,
+        moral: moral
       }).then(() => {
         location.reload();
       });
     }
 
-  </script>
 
-  <script>
-    function myFunction() {
-      var input, filter, ul, li, a, i, txtValue;
-      input = document.getElementById("myInput");
-      filter = input.value.toUpperCase();
-      ul = document.getElementById("myUL");
-      li = ul.getElementsByTagName("li");
+    window.myFunction = function () {
+      var searchTerm, li, a, i, txtValue;
+      searchTerm = document.getElementById("searchTerm").value;
+      searchTerm = searchTerm.toUpperCase();
+
+      li = document.getElementsByClassName("post");
       for (i = 0; i < li.length; i++) {
-        a = li[i].getElementsByTagName("a")[0];
+        a = li[i].getElementsByClassName("title")[0];
         txtValue = a.textContent || a.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        if (txtValue.toUpperCase().indexOf(searchTerm) > -1) {
           li[i].style.display = "";
         } else {
           li[i].style.display = "none";
