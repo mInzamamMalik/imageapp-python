@@ -242,6 +242,8 @@
 
       document.getElementById(id).innerHTML += 'updating...';
       document.getElementById('editTitle').value = title
+      document.getElementById('editContent').value = content
+      document.getElementById('editMoral').value = moral
 
       updateDoc(doc(db, "books", id), {
         title: title,
