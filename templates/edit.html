@@ -154,6 +154,7 @@
 
   </main>
 
+  <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js'
     import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js"
@@ -216,11 +217,14 @@
         
         <br />
         <label for="editContent"> Text:</label> 
-        <textarea id="editContent" cols="30" rows="10">${content}</textarea>
+        <textarea id="editContent" onblur="reClassify()" cols="30" rows="10">${content}</textarea>
         
         <br />
-        <label for="editMoral"> Moral:</label> 
-        <input id="editMoral" type="text" size="35" required value="${moral}">
+        <label for="editMoral"> Moral:</label> <span id="reClassifyIndicator"></span> 
+        <input disabled id="editMoral" type="text" size="35" required value="${moral}">
+        <button id="classifyButton" onclick="reClassifyClick(event)">classify content</button>
+
+        <br />
         <br />
         <label for="editPicture"> Picture:</label> 
         <input id="editPicture" type="file">
@@ -249,6 +253,39 @@
       });
     }
 
+    window.reClassify = () => {
+      document.querySelector("#classifyButton").innerHTML = "re-classifying..."
+      const form = new FormData();
+      form.append('content', document.querySelector("#editContent").value);
+
+      axios.post("/Add_pred", form).then(response => {
+        console.log(response.data);
+        document.querySelector("#editMoral").value = response.data
+        document.querySelector("#classifyButton").innerHTML = "classify content"
+
+      }).catch(e => {
+        console.log(e);
+        alert("Failed to add, check developer logs");
+      })
+    };
+
+    window.reClassifyClick = (event) => {
+            event.preventDefault();
+            document.querySelector("#classifyButton").innerHTML = "re-classifying..."
+
+            const form = new FormData();
+            form.append('content', document.querySelector("#editContent").value);
+
+            axios.post("/Add_pred", form).then(response => {
+                console.log(response.data);
+                document.querySelector("#editMoral").value = response.data
+                document.querySelector("#classifyButton").innerHTML = "classify content"
+            }).catch(e => {
+                console.log(e);
+                alert("Failed to add, check developer logs");
+            })
+        }
+
 
     window.myFunction = function () {
       var searchTerm, li, a, i, txtValue;
@@ -266,6 +303,8 @@
         }
       }
     }
+
+
   </script>
 </body>
 
