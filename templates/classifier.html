@@ -116,6 +116,14 @@
             height: 1000px;
             border-radius: 20px;
         }</style>
+
+<script>
+    function play() {
+      var audio = document.getElementById("audio");
+      audio.play();
+    }
+  </script> 
+ 
 <body style="font-size: 22px; background-image: url('https://images.unsplash.com/photo-1588580000645-4562a6d2c839?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80')  ;background-size: cover;">
         <table id="content" cellpadding="10" style="border: 5px solid #C69A6F;">
           
@@ -127,7 +135,7 @@
                 " />
             
 
-                <form id="form" action="{{url_for('save_Data')}}">
+                <form id="form"name="myForm" method="post" action="{{url_for('save_Data')}}" >
                     <h1 style="color:#C69A6F; text-align:center;">Add New story</h1> <br>
                     <ul style="width: auto;height: auto ;margin-left: 200px;">
                         <label for='title'>Title:</label><br>
@@ -139,18 +147,20 @@
                             style="width: 510px;height: 150px;padding: 12px 20px;box-sizing: border-box;border: 2px solid #ccc;border-radius: 4px;background-color: #f8f8f8;font-size: 16px;resize: none;">
                         </textarea><br>
 
-                        <button  id="classifyButton">classify content</button><br> <br>
+                        <button   id="classifyButton">classify content</button><br> <br>
+                        <audio id="audio" src="{{url_for('static', filename='audio.mp3')}}"></audio>
+
                         <span style="font-weight: bold; background-color: #C69A6F;" id="moral"></span>
 
                         <hr>
                         <label for="picture">Upload story picture:</label><br>
                         <input type="file" name='picture' id="picture" id="picture" /><br>
                         <hr>
-                        <input type="hidden" name='id' id="id" />
+                        <!-- <input type="hidden" name='id' id="id" /> -->
                         <br /><br /><br />
 
                         <input style="float: right;" class="button button2" type="submit"
-                            value="approve" name="action1">
+                            value="add" name="action1" id="add">
 
                         <input style="height:50px;width:150px; font-size: 20px;margin-left: 15%;" type="submit" value="cancel" name="action" >
 
@@ -216,6 +226,9 @@
                     const content = document.getElementById("textarea").value
                     const picture = url;
 
+
+            
+                          
                     const form = new FormData();
                     form.append('titleSmall', titleSmall);
                     form.append('title', title);
@@ -223,19 +236,42 @@
                     form.append('picture', picture);
                     form.append('moral', document.querySelector("#moral").innerHTML);
 
+                   
+
                     // const querySnapshot = await getDocs(collection(db, "posts"));
+                    
+                    
                     const citiesRef = collection(db, "books");
                     const q = query(citiesRef, where("titleSmall", "==", titleSmall));
                     const querySnapshot = await getDocs(q);
+                    
+
+                    //validation
+                    if( document.myForm.title.value == "" ) {
+                         alert( "Please provide story title!" );
+                         document.myForm.title.focus() ;
+                         return false;
+                                   }
+                       if( document.myForm.content.value == "" ) {
+                         alert( "Please provide story's content!" );
+                         document.myForm.content.focus() ;
+                         return false;
+                           }
+                       if( document.myForm.picture.value == "" ) {
+                         alert( "Please provide story's picture!" );
+                          document.myForm.picture.focus() ;
+                          return false;
+                          }
 
                     if (querySnapshot.size === 0) { // no duplicate found
-                        axios.post("/Save_data", form).then(response => {
 
+                        axios.post("/Save_data", form).then(response => {
+                           
                             console.log(response.data);
                             alert("story Added Successfully");
                         }).catch(e => {
                             console.log(e);
-                            alert("Failed to add");
+                            alert("Failed ");
                         })
 
                     }else{
@@ -261,6 +297,7 @@
             form.append('content', document.querySelector("#textarea").value);
 
             axios.post("/Add_pred", form).then(response => {
+                audio.play();
                 console.log(response.data);
                 document.querySelector("#moral").innerHTML = response.data
             }).catch(e => {

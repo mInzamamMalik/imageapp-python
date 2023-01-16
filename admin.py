@@ -212,6 +212,7 @@ def save_Data():
     db_store = firestore.client()
     print(request.form)
     dict1 = {}
+    dict1['titleSmall'] = request.form.get("titleSmall")
     dict1['title'] = request.form.get("title")
     dict1['content'] = request.form.get("content")
     dict1['picture'] = request.form.get("picture")

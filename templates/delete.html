@@ -117,17 +117,37 @@
               padding: 2px;
                 " />
        <h1 style="color:#a8703b; text-align:center;">Delete</h1>
-       <input type="text" placeholder="Search.." name="search2">
-  <button type="submit"><i class="fa fa-search"></i></button>
+       <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
        {% with messages = get_flashed_messages(category_filter=["category2"]) %}
             {% if messages %}
                 {% for message in messages %}
-                    <h3 style="color:white;  background: #C69A6F;">{{ message }}</h3> 
+                <ul id="myUL">
+                  <li style="color:white;  background: #C69A6F;"><a href="#">{{ message }}</a> </li>
+                  </ul>
                 {% endfor %}
             {% endif %}
         {% endwith %} 
 
         
     </main>
+
+    <script>
+      function myFunction() {
+          var input, filter, ul, li, a, i, txtValue;
+          input = document.getElementById("myInput");
+          filter = input.value.toUpperCase();
+          ul = document.getElementById("myUL");
+          li = ul.getElementsByTagName("li");
+          for (i = 0; i < li.length; i++) {
+              a = li[i].getElementsByTagName("a")[0];
+              txtValue = a.textContent || a.innerText;
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                  li[i].style.display = "";
+              } else {
+                  li[i].style.display = "none";
+              }
+          }
+      }
+      </script>
     </body>
     </html>
