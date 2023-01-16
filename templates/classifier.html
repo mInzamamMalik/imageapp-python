@@ -231,10 +231,12 @@
 
                 document.getElementById("title_error_message").innerHTML = "Duplicate title, Add button is disabled"
                 document.getElementById("add").setAttribute("disabled", "true");
-
+                document.getElementById("add").style.backgroundColor = '#d1d1d1';
+                
             } else {
                 document.getElementById("title_error_message").innerHTML = ""
                 document.getElementById("add").removeAttribute("disabled");
+                document.getElementById("add").style.backgroundColor = '#C69A6F';
             }
         }
 
