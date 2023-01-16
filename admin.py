@@ -208,7 +208,7 @@ def hello():
 
 @app.route('/Save_data', methods=['GET', 'POST'])
 def save_Data():
- if request.form['action1'] == 'approve':
+
     db_store = firestore.client()
     print(request.form)
     dict1 = {}
@@ -221,11 +221,12 @@ def save_Data():
     db_store.collection(u'books').add(dict1)
     return "save sucessfully"
 
-
- elif request.form['action'] == 'cancel':
+@app.route('/Cancel_data', methods=['GET', 'POST'])
+def cancel_Data():
     db_store = firestore.client()
     print(request.form)
     dict1 = {}
+    dict1['titleSmall'] = request.form.get("titleSmall")
     dict1['title'] = request.form.get("title")
     dict1['content'] = request.form.get("content")
     dict1['picture'] = request.form.get("picture")
@@ -285,7 +286,7 @@ def prediction():
 # In[ ]:
 if __name__ == "__main__":
     # app.debug = True
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=5001)
 
 
 # In[ ]:
