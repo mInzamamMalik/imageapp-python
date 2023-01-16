@@ -17,7 +17,7 @@ from firebase_admin import credentials
 from flask import Flask, request, url_for ,flash , jsonify 
 from firebase_admin import firestore
 import pyrebase
-
+import time
 databaseURL = 'https://read-me-a-story3-default-rtdb.firebaseio.com/'
 
 cred_object = credentials.Certificate("./config/firebase.json")
@@ -209,6 +209,9 @@ def hello():
 @app.route('/Save_data', methods=['GET', 'POST'])
 def save_Data():
     print(request.form)
+
+    curr_time = str(time.time_ns())
+
     dict1 = {}
     dict1['titleSmall'] = request.form.get("titleSmall")
     dict1['title'] = request.form.get("title")
@@ -217,24 +220,25 @@ def save_Data():
     dict1['moral'] = request.form.get("moral")  # this shows overload error
     dict1['createdOn'] = firestore.SERVER_TIMESTAMP
 
-    db.collection(u'books').add(dict1)
-    return "save sucessfully"
+    db.collection(u'books').document(curr_time).set(dict1)
+    return "save successfully"
 
 @app.route('/Cancel_data', methods=['GET', 'POST'])
 def cancel_Data():
     print(request.form)
+
+    curr_time = str(time.time_ns())
+
     dict1 = {}
     dict1['titleSmall'] = request.form.get("titleSmall")
     dict1['title'] = request.form.get("title")
     dict1['content'] = request.form.get("content")
     dict1['picture'] = request.form.get("picture")
     dict1['moral'] = request.form.get("moral")  # this shows overload error
-    # dict1['createdOn'] = firestore.SERVER_TIMESTAMP
+    dict1['createdOn'] = firestore.SERVER_TIMESTAMP
 
-
-    db.collection(u'canceledStories').add(dict1)
+    db.collection(u'canceledStories').document(curr_time).set(dict1)
     return "canceled sucessfully"
-
 
 
 
