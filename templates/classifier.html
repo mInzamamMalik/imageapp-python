@@ -146,8 +146,10 @@
                     <h1 style="color:#C69A6F; text-align:center;">Add New story</h1> <br>
                     <ul style="width: auto;height: auto ;margin-left: 200px;">
                         <label for='title'>Title:</label><br>
-                        <input type="text" name="title" id='title'
-                            style="width: 70%; padding: 12px; border: 1px solid #ccc; border-radius: 4px;"><br>
+                        <input type="text" name="title" id='title' required
+                            style="width: 70%; padding: 12px; border: 1px solid #ccc; border-radius: 4px;"
+                            onblur="validateTitle()"><br>
+                        <span style="color: red" id="title_error_message"></span>
                         <hr>
                         <label for='story'>Content:</label><br>
                         <textarea id="textarea" name='content' placeholder="Enter content here ....."
@@ -169,8 +171,8 @@
                         <input style="float: right;" class="button button2" type="submit" value="add" name="action1"
                             id="add">
 
-                        <input style="height:50px;width:150px; font-size: 20px;margin-left: 15%;" type="submit"
-                            value="cancel" name="action">
+                        <input id="cancelButton" style="height:50px;width:150px; font-size: 20px;margin-left: 15%;"
+                            type="submit" value="cancel" name="action">
 
 
 
@@ -211,102 +213,114 @@
         console.log("script2");
 
 
-        document.getElementById("form").addEventListener("submit", uploadFile);
-        function uploadFile(event) {
+        window.validateTitle = async () => {
+            const title = document.getElementById("title").value
+            if (!title) return;
 
-            event.preventDefault()
+            const titleSmall = title.toLowerCase();
+            const citiesRef = collection(db, "books");
+            const q = query(citiesRef, where("titleSmall", "==", titleSmall));
 
-            const picture = document.getElementById("picture");
+            document.getElementById("title_error_message").innerHTML = "checking..."
 
-            console.log("picture: ", picture.files[0]);
+            const querySnapshot = await getDocs(q);
+
+            console.log("checking duplicate: ", querySnapshot.size);
+
+            if (querySnapshot.size !== 0) { // no duplicate found
+
+                document.getElementById("title_error_message").innerHTML = "Duplicate title, Add button is disabled"
+                document.getElementById("add").setAttribute("disabled", "true");
+
+            } else {
+                document.getElementById("title_error_message").innerHTML = ""
+                document.getElementById("add").removeAttribute("disabled");
+            }
+        }
+
+        document.querySelector("#cancelButton").addEventListener("click", async (event) => {
+            event.preventDefault();
+            console.log("cancel");
+
+            let picture = document.getElementById("picture");
 
             const storageRef = ref(storage, `${new Date().getTime()}-${picture.files[0]?.name}`);
-            uploadBytes(storageRef, picture.files[0]).then((snapshot) => {
+            let snapshot = await uploadBytes(storageRef, picture.files[0])
 
-                console.log('Uploaded a blob or file!', snapshot);
+            let url = await getDownloadURL(storageRef)
 
-                getDownloadURL(storageRef).then(async (url) => {
+            const form = new FormData();
+            form.append('titleSmall', document.getElementById("title").value);
+            form.append('title', document.getElementById("title").value.toLowerCase());
+            form.append('content', document.getElementById("textarea").value);
+            form.append('picture', url);
+            form.append('moral', document.querySelector("#moral").innerHTML);
 
-                    console.log(url);
+            axios.post("/Cancel_data", form).then(response => {
+                console.log(response.data);
+                alert("story Canceled Successfully");
+                document.getElementById("form").reset()
 
-                    const title = document.getElementById("title").value
-                    const titleSmall = title.toLowerCase();
-                    const content = document.getElementById("textarea").value
-                    const picture = url;
+            }).catch(e => {
+                console.log(e);
+                alert("Failed ");
+            })
 
-
-
-
-                    const form = new FormData();
-                    form.append('titleSmall', titleSmall);
-                    form.append('title', title);
-                    form.append('content', content);
-                    form.append('picture', picture);
-                    form.append('moral', document.querySelector("#moral").innerHTML);
-
-
-
-                    // const querySnapshot = await getDocs(collection(db, "posts"));
-
-
-                    const citiesRef = collection(db, "books");
-                    const q = query(citiesRef, where("titleSmall", "==", titleSmall));
-                    const querySnapshot = await getDocs(q);
-
-
-                    //validation
-                    if (document.myForm.title.value == "") {
-                        alert("Please provide story title!");
-                        document.myForm.title.focus();
-                        return false;
-                    }
-                    if (document.myForm.content.value == "") {
-                        alert("Please provide story's content!");
-                        document.myForm.content.focus();
-                        return false;
-                    }
-                    if (document.myForm.picture.value == "") {
-                        alert("Please provide story's picture!");
-                        document.myForm.picture.focus();
-                        return false;
-                    }
-
-                    if (querySnapshot.size === 0) { // no duplicate found
-
-                        axios.post("/Save_data", form).then(response => {
-
-                            console.log(response.data);
-                            alert("story Added Successfully");
-                        }).catch(e => {
-                            console.log(e);
-                            alert("Failed ");
-                        })
-
-                    } else {
-                        let confirmAction = confirm("Title is already in database, Are you sure to execute this action?");
-                        if (confirmAction) {
-
-                            axios.post("/Cancel_data", form).then(response => {
-                                console.log(response.data);
-                                alert("story Canceled Successfully");
-                            }).catch(e => {
-                                console.log(e);
-                                alert("Failed ");
-                            })
-
-                        }
-                    }
+        }, false);
 
 
 
+        document.getElementById("form").addEventListener("submit", uploadFile);
+        async function uploadFile(event) {
+            event.preventDefault()
+            console.log("uploadFile");
 
-                });
-            });
+            let picture = document.getElementById("picture");
+
+            const storageRef = ref(storage, `${new Date().getTime()}-${picture.files[0]?.name}`);
+            let snapshot = await uploadBytes(storageRef, picture.files[0])
+
+            let url = await getDownloadURL(storageRef)
+
+            const form = new FormData();
+            form.append('titleSmall', document.getElementById("title").value);
+            form.append('title', document.getElementById("title").value.toLowerCase());
+            form.append('content', document.getElementById("textarea").value);
+            form.append('picture', url);
+            form.append('moral', document.querySelector("#moral").innerHTML);
+
+            //validation
+            // if (document.myForm.title.value == "") {
+            //     alert("Please provide story title!");
+            //     document.myForm.title.focus();
+            //     return false;
+            // }
+            // if (document.myForm.content.value == "") {
+            //     alert("Please provide story's content!");
+            //     document.myForm.content.focus();
+            //     return false;
+            // }
+            // if (document.myForm.picture.value == "") {
+            //     alert("Please provide story's picture!");
+            //     document.myForm.picture.focus();
+            //     return false;
+            // }
+
+
+            axios.post("/Save_data", form).then(response => {
+
+                console.log(response.data);
+                alert("story Added Successfully");
+                document.getElementById("form").reset()
+            }).catch(e => {
+                console.log(e);
+                alert("Failed ");
+            })
+
+
         }
 
 
-    </script>
-    <script>
         // document.getElementById("textarea").addEventListener("onblur", classify)
 
         document.querySelector("#classifyButton").addEventListener("click", (event) => {

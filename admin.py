@@ -208,8 +208,6 @@ def hello():
 
 @app.route('/Save_data', methods=['GET', 'POST'])
 def save_Data():
-
-    db_store = firestore.client()
     print(request.form)
     dict1 = {}
     dict1['titleSmall'] = request.form.get("titleSmall")
@@ -217,13 +215,13 @@ def save_Data():
     dict1['content'] = request.form.get("content")
     dict1['picture'] = request.form.get("picture")
     dict1['moral'] = request.form.get("moral")  # this shows overload error
+    dict1['createdOn'] = firestore.SERVER_TIMESTAMP
 
-    db_store.collection(u'books').add(dict1)
+    db.collection(u'books').add(dict1)
     return "save sucessfully"
 
 @app.route('/Cancel_data', methods=['GET', 'POST'])
 def cancel_Data():
-    db_store = firestore.client()
     print(request.form)
     dict1 = {}
     dict1['titleSmall'] = request.form.get("titleSmall")
@@ -231,8 +229,10 @@ def cancel_Data():
     dict1['content'] = request.form.get("content")
     dict1['picture'] = request.form.get("picture")
     dict1['moral'] = request.form.get("moral")  # this shows overload error
+    # dict1['createdOn'] = firestore.SERVER_TIMESTAMP
 
-    db_store.collection(u'canceledStories').add(dict1)
+
+    db.collection(u'canceledStories').add(dict1)
     return "canceled sucessfully"
 
 
