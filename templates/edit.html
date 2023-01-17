@@ -234,25 +234,37 @@
       </form>`
     }
 
-    window.completeEdit = () => {
+    window.completeEdit = async () => {
       const id = document.getElementById('editId').value
       const title = document.getElementById('editTitle').value
       const content = document.getElementById('editContent').value
       const moral = document.getElementById('editMoral').value
+      const picture = document.getElementById('editPicture')
 
       document.getElementById(id).innerHTML += 'updating...';
       document.getElementById('editTitle').value = title
       document.getElementById('editContent').value = content
       document.getElementById('editMoral').value = moral
 
-      updateDoc(doc(db, "books", id), {
+      console.log("uploadFile");
+
+      let update = {
         title: title,
         titleSmall: title.toLowerCase(),
         content: content,
         moral: moral
-      }).then(() => {
-        location.reload();
-      });
+      }
+
+      if (picture?.files[0]?.name) {
+        console.log("file detected");
+        const storageRef = ref(storage, `${new Date().getTime()}-${picture.files[0]?.name}`);
+        let snapshot = await uploadBytes(storageRef, picture.files[0])
+        update.picture = await getDownloadURL(storageRef)
+      }
+
+      await updateDoc(doc(db, "books", id), update)
+      location.reload();
+
     }
 
     window.reClassify = () => {
@@ -272,21 +284,21 @@
     };
 
     window.reClassifyClick = (event) => {
-            event.preventDefault();
-            document.querySelector("#classifyButton").innerHTML = "re-classifying..."
+      event.preventDefault();
+      document.querySelector("#classifyButton").innerHTML = "re-classifying..."
 
-            const form = new FormData();
-            form.append('content', document.querySelector("#editContent").value);
+      const form = new FormData();
+      form.append('content', document.querySelector("#editContent").value);
 
-            axios.post("/Add_pred", form).then(response => {
-                console.log(response.data);
-                document.querySelector("#editMoral").value = response.data
-                document.querySelector("#classifyButton").innerHTML = "classify content"
-            }).catch(e => {
-                console.log(e);
-                alert("Failed to add, check developer logs");
-            })
-        }
+      axios.post("/Add_pred", form).then(response => {
+        console.log(response.data);
+        document.querySelector("#editMoral").value = response.data
+        document.querySelector("#classifyButton").innerHTML = "classify content"
+      }).catch(e => {
+        console.log(e);
+        alert("Failed to add, check developer logs");
+      })
+    }
 
 
     window.myFunction = function () {
