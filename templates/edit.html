@@ -156,8 +156,14 @@
     padding: 0.2em;
     visibility: hidden;
   }
-  .post .threeDot:hover .menu{
+
+  .post .threeDot:hover .menu {
     visibility: visible;
+  }
+
+  .post .deleteCheck {
+    width: 1.7em;
+    height: 1.7em;
   }
 
 
@@ -197,6 +203,7 @@
     {% endif %}
     {% endwith %} -->
 
+    <button id="deleteSelectedButton" class="hidden"> Delete Selected Stories</button>
     <div id="stories"></div>
 
 
@@ -242,7 +249,20 @@
 
             <img src='${doc.data()?.picture}'/>
             <div class="title">
-              <div class="text"> ${doc.data()?.title} </div>
+              
+              <div class="text">
+                <input 
+                  class="deleteCheck" 
+                  type="checkbox" 
+                  name="deleteCheck" 
+                  value="${doc.id}" 
+                  onclick="checkBoxClick(event)" 
+                />
+
+                <span> 
+                  ${doc.data()?.title} 
+                </span>
+              </div>
               
 
               <div class="threeDot">
@@ -316,6 +336,22 @@
         await deleteDoc(doc(db, "books", id));
         location.reload();
       }
+    }
+
+    window.toBeDeleted = [];
+    window.checkBoxClick = (event) => {
+
+      const id = event.target.value
+
+      toBeDeleted.push(id)
+
+      if (id.length) {
+        document.getElementById("deleteSelectedButton").classList.remove('hidden')
+      }else{
+        document.getElementById("deleteSelectedButton").classList.add('hidden')
+      }
+
+
     }
 
     window.completeEdit = async () => {
