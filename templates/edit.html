@@ -129,11 +129,13 @@
     align-items: center;
     font-family: sans-serif;
   }
-  .post> img{
+
+  .post>img {
     width: 40em;
     border-radius: 15px;
   }
-  .post> .title{
+
+  .post>.title {
     width: 98%;
     font-size: 2em;
 
@@ -141,9 +143,21 @@
     align-items: baseline;
     justify-content: space-between;
   }
-  .post .threeDot{
-    align-self: right;
+
+  .post .threeDot img {
     width: 0.5em;
+  }
+
+  .post .menu {
+    background-color: white;
+    width: 3em;
+    position: absolute;
+    right: 4.4em;
+    padding: 0.2em;
+    visibility: hidden;
+  }
+  .post .threeDot:hover .menu{
+    visibility: visible;
   }
 
 
@@ -229,9 +243,16 @@
             <img src='${doc.data()?.picture}'/>
             <div class="title">
               <div class="text"> ${doc.data()?.title} </div>
-              <button onClick="editPost(\`${doc.id}\`,\`${doc.data()?.title}\`, \`${doc.data()?.content}\`, \`${doc.data()?.moral}\` )">Edit</button>
+              
 
-              <img class="threeDot" src="/static/three-dots.png" />
+              <div class="threeDot">
+                <img src="/static/three-dots.png" />
+                <div class="menu">
+                  <button onClick="editPost(\`${doc.id}\`,\`${doc.data()?.title}\`, \`${doc.data()?.content}\`, \`${doc.data()?.moral}\` )">Edit</button>
+                  <br/>
+                  <button onClick="deletePost('${doc.id}')">Delete</button>
+                </div>
+              </div>
             </div>
             
             <p id="short_content_${doc.id}">
@@ -288,6 +309,13 @@
 
         <button>submit</button>
       </form>`
+    }
+
+    window.deletePost = async (id) => {
+      if (confirm("Are you sure you want to delete?")) {
+        await deleteDoc(doc(db, "books", id));
+        location.reload();
+      }
     }
 
     window.completeEdit = async () => {
