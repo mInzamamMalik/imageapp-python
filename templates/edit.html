@@ -123,6 +123,19 @@
     padding: 10px;
     border: 2px solid black;
   }
+
+  .seeMore {
+    font-weight: bold;
+  }
+
+  .seeMore:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .hidden {
+    display: none
+  }
 </style>
 
 <body
@@ -194,7 +207,14 @@
             <h3 class="title">
               ${doc.data()?.title}  <button onClick="editPost(\`${doc.id}\`,\`${doc.data()?.title}\`, \`${doc.data()?.content}\`, \`${doc.data()?.moral}\` )">Edit</button>
             </h3>
-            <p>(${doc.data()?.moral}) - ${doc.data()?.content}</p>
+            
+            <p id="short_content_${doc.id}">
+              (${doc.data()?.moral}) - ${doc.data()?.content.slice(0, 255)}... <span onclick="seeMore('${doc.id}')" class="seeMore"> See more</span>
+            </p>
+
+            <p id="long_content_${doc.id}" class="hidden">
+              (${doc.data()?.moral}) - ${doc.data()?.content} <span onclick="seeLess('${doc.id}')" class="seeMore"> See less</span>
+            </p>
           </div>
           <br />
           <br />
@@ -202,6 +222,16 @@
       });
     }
     getData();
+
+    window.seeMore = (id) => {
+      document.getElementById(`short_content_${id}`).classList.add("hidden")
+      document.getElementById(`long_content_${id}`).classList.remove("hidden")
+    }
+    window.seeLess = (id) => {
+      document.getElementById(`short_content_${id}`).classList.remove("hidden")
+      document.getElementById(`long_content_${id}`).classList.add("hidden")
+    }
+
 
     window.editPost = (id, title, content, moral) => {
 
