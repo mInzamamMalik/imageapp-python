@@ -122,7 +122,22 @@
     margin: 10px;
     padding: 10px;
     border: 2px solid black;
+    border-radius: 15px;
+    width: 40em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: sans-serif;
   }
+  .post> img{
+    width: 40em;
+    border-radius: 15px;
+  }
+  .post> .title{
+    align-self: flex-start;
+    font-size: 2em;
+  }
+
 
   .seeMore {
     font-weight: bold;
@@ -203,10 +218,10 @@
         stories.innerHTML += `
           <div class="post" id="${doc.id}">
 
-            <img src='${doc.data()?.picture}' height="100px" />
-            <h3 class="title">
+            <img src='${doc.data()?.picture}'/>
+            <div class="title">
               ${doc.data()?.title}  <button onClick="editPost(\`${doc.id}\`,\`${doc.data()?.title}\`, \`${doc.data()?.content}\`, \`${doc.data()?.moral}\` )">Edit</button>
-            </h3>
+            </div>
             
             <p id="short_content_${doc.id}">
               (${doc.data()?.moral}) - ${doc.data()?.content.slice(0, 255)}... <span onclick="seeMore('${doc.id}')" class="seeMore"> See more</span>
