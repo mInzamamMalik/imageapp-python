@@ -134,8 +134,16 @@
     border-radius: 15px;
   }
   .post> .title{
-    align-self: flex-start;
+    width: 98%;
     font-size: 2em;
+
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+  .post .threeDot{
+    align-self: right;
+    width: 0.5em;
   }
 
 
@@ -220,7 +228,10 @@
 
             <img src='${doc.data()?.picture}'/>
             <div class="title">
-              ${doc.data()?.title}  <button onClick="editPost(\`${doc.id}\`,\`${doc.data()?.title}\`, \`${doc.data()?.content}\`, \`${doc.data()?.moral}\` )">Edit</button>
+              <div class="text"> ${doc.data()?.title} </div>
+              <button onClick="editPost(\`${doc.id}\`,\`${doc.data()?.title}\`, \`${doc.data()?.content}\`, \`${doc.data()?.moral}\` )">Edit</button>
+
+              <img class="threeDot" src="/static/three-dots.png" />
             </div>
             
             <p id="short_content_${doc.id}">
