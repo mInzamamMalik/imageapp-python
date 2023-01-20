@@ -360,7 +360,7 @@
     window.deleteSelected = async () => {
       let promises = []
 
-      toBeDeleted.map(eachId => {
+      toBeDeleted.map(async (eachId) => {
         await deleteDoc(doc(db, "books", eachId));
         location.reload();
       })
