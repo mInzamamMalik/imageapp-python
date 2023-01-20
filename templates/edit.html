@@ -203,7 +203,7 @@
     {% endif %}
     {% endwith %} -->
 
-    <button id="deleteSelectedButton" class="hidden"> Delete Selected Stories</button>
+    <button id="deleteSelectedButton" class="hidden" onclick="deleteSelected()"> Delete Selected Stories</button>
     <div id="stories"></div>
 
 
@@ -342,14 +342,28 @@
     window.checkBoxClick = (event) => {
 
       const id = event.target.value
+      const isChecked = event.target.checked
 
-      toBeDeleted.push(id)
+      if (isChecked) {
+        toBeDeleted.push(id)
+      } else {
+        toBeDeleted = toBeDeleted.filter(x => x !== id);
+      }
+      console.log("toBeDeleted: ", toBeDeleted);
 
-      if (id.length) {
+      if (toBeDeleted.length) {
         document.getElementById("deleteSelectedButton").classList.remove('hidden')
-      }else{
+      } else {
         document.getElementById("deleteSelectedButton").classList.add('hidden')
       }
+    }
+    window.deleteSelected = async () => {
+      let promises = []
+
+      toBeDeleted.map(eachId => {
+        await deleteDoc(doc(db, "books", eachId));
+        location.reload();
+      })
 
 
     }
