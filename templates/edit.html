@@ -144,18 +144,39 @@
     justify-content: space-between;
   }
 
+  .post .threeDot {
+    width: 40px;
+    height: 25px;
+    text-align: center;
+  }
+
   .post .threeDot img {
     width: 0.5em;
   }
 
   .post .menu {
     background-color: white;
-    width: 3em;
-    position: absolute;
-    right: 4.4em;
-    padding: 0.2em;
+    width: 2em;
+    position: relative;
+    right: 2em;
+    padding: 0.3em;
     visibility: hidden;
+    border-radius: 15px;
   }
+
+  .post .menu .menuItem {
+    font-size: 0.5em;
+    padding: 0.3em;
+    border-radius: 15px;    
+  }
+  .post .menu .menuItem:hover {
+    background-color: #cfcbcb;
+    cursor: default;
+  }
+  .post .menu .menuItemDivider {
+    margin: 0.2em;
+  }
+
 
   .post .threeDot:hover .menu {
     visibility: visible;
@@ -268,9 +289,9 @@
               <div class="threeDot">
                 <img src="/static/three-dots.png" />
                 <div class="menu">
-                  <button onClick="editPost(\`${doc.id}\`,\`${doc.data()?.title}\`, \`${doc.data()?.content}\`, \`${doc.data()?.moral}\` )">Edit</button>
-                  <br/>
-                  <button onClick="deletePost('${doc.id}')">Delete</button>
+                  <div class="menuItem" onClick="editPost(\`${doc.id}\`,\`${doc.data()?.title}\`, \`${doc.data()?.content}\`, \`${doc.data()?.moral}\` )">Edit</div>
+                  <hr class="menuItemDivider"/>
+                  <div class="menuItem" onClick="deletePost('${doc.id}')">Delete</div>
                 </div>
               </div>
             </div>
