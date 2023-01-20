@@ -118,6 +118,12 @@
     border-radius: 20px;
   }
 
+  .stories {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .post {
     margin: 10px;
     padding: 10px;
@@ -167,12 +173,14 @@
   .post .menu .menuItem {
     font-size: 0.5em;
     padding: 0.3em;
-    border-radius: 15px;    
+    border-radius: 15px;
   }
+
   .post .menu .menuItem:hover {
     background-color: #cfcbcb;
     cursor: default;
   }
+
   .post .menu .menuItemDivider {
     margin: 0.2em;
   }
@@ -224,8 +232,10 @@
     {% endif %}
     {% endwith %} -->
 
-    <button id="deleteSelectedButton" class="hidden" onclick="deleteSelected()"> Delete Selected Stories</button>
-    <div id="stories"></div>
+    <div id="stories" class="stories">
+      <button id="deleteSelectedButton" class="hidden" onclick="deleteSelected()"> Delete Selected Stories</button>
+
+    </div>
 
 
 
