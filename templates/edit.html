@@ -290,7 +290,7 @@
                   onclick="checkBoxClick(event)" 
                 />
 
-                <span> 
+                <span id="title_${doc.id}"> 
                   ${doc.data()?.title} 
                 </span>
               </div>
@@ -299,7 +299,7 @@
               <div class="threeDot">
                 <img src="/static/three-dots.png" />
                 <div class="menu">
-                  <div class="menuItem" onClick="editPost(\`${doc.id}\`,\`${doc.data()?.title}\`, \`${doc.data()?.content}\`, \`${doc.data()?.moral}\` )">Edit</div>
+                  <div class="menuItem" onClick="editPost('${doc.id}')">Edit</div>
                   <hr class="menuItemDivider"/>
                   <div class="menuItem" onClick="deletePost('${doc.id}')">Delete</div>
                 </div>
@@ -311,7 +311,7 @@
             </p>
 
             <p id="long_content_${doc.id}" class="hidden">
-              (${doc.data()?.moral}) - ${doc.data()?.content} <span onclick="seeLess('${doc.id}')" class="seeMore"> See less</span>
+              (<span id="moral_${doc.id}">${doc.data()?.moral})</span> - ${doc.data()?.content} <span onclick="seeLess('${doc.id}')" class="seeMore"> See less</span>
             </p>
           </div>
           <br />
@@ -331,9 +331,13 @@
     }
 
 
-    window.editPost = (id, title, content, moral) => {
+    window.editPost = (id) => {
 
       if (document.getElementById('editForm')) return;
+
+      const title = document.getElementById(`title_${id}`).innerText;
+      const content = document.getElementById(`long_content_${id}`).innerText;
+      const moral = document.getElementById(`moral_${id}`).innerText;
 
       document.getElementById(id).innerHTML = `
         <form id="editForm" onsubmit="completeEdit(); return false">
