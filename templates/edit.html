@@ -3,6 +3,8 @@
 <head>
   <title> Edit</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0" />
 </head>
 <header>
 
@@ -120,8 +122,8 @@
 
   .stories {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .post {
@@ -129,7 +131,7 @@
     padding: 10px;
     border: 2px solid black;
     border-radius: 15px;
-    width: 40em;
+    width: 26em;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -137,8 +139,8 @@
   }
 
   .post>img {
-    width: 40em;
-    border-radius: 15px;
+    width: 100%;
+    border-radius: inherit;
   }
 
   .post>.title {
@@ -208,6 +210,12 @@
   .hidden {
     display: none
   }
+
+  .toolsCluster {
+    display: flex;
+    justify-content: center;
+    cursor: default;
+  }
 </style>
 
 <body
@@ -232,8 +240,14 @@
     {% endif %}
     {% endwith %} -->
 
+    <br>
+
+    <div class="toolsCluster">
+      <span id="deleteSelectedButton" class="material-symbols-outlined hidden" onclick="deleteSelected()">
+        delete
+      </span>
+    </div>
     <div id="stories" class="stories">
-      <button id="deleteSelectedButton" class="hidden" onclick="deleteSelected()"> Delete Selected Stories</button>
 
     </div>
 
@@ -393,14 +407,15 @@
       }
     }
     window.deleteSelected = async () => {
-      let promises = []
+      if (confirm(`Are you sure to delete the ${toBeDeleted.length} selected stories?`)) {
 
-      toBeDeleted.map(async (eachId) => {
-        await deleteDoc(doc(db, "books", eachId));
-        location.reload();
-      })
+        let promises = []
 
-
+        toBeDeleted.map(async (eachId) => {
+          await deleteDoc(doc(db, "books", eachId));
+          location.reload();
+        })
+      }
     }
 
     window.completeEdit = async () => {
