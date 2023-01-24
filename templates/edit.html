@@ -139,7 +139,7 @@
   }
 
   .post>img {
-    width: 100%;
+    max-height: 150px;
     border-radius: inherit;
   }
 
@@ -197,12 +197,15 @@
     height: 1.7em;
   }
 
+  .post .content{
+    align-self: flex-start;
+  }
 
-  .seeMore {
+  .post .seeMore {
     font-weight: bold;
   }
 
-  .seeMore:hover {
+  .post .seeMore:hover {
     text-decoration: underline;
     cursor: pointer;
   }
@@ -211,7 +214,7 @@
     display: none
   }
 
-  .toolsCluster {
+  .post .toolsCluster {
     display: flex;
     justify-content: center;
     cursor: default;
@@ -321,11 +324,11 @@
               </div>
             </div>
             
-            <p id="short_content_${doc.id}">
+            <p id="short_content_${doc.id}" class="content">
               (${doc.data()?.moral}) - ${doc.data()?.content.slice(0, 255)}... <span onclick="seeMore('${doc.id}')" class="seeMore"> See more</span>
             </p>
 
-            <p id="long_content_${doc.id}" class="hidden">
+            <p id="long_content_${doc.id}" class="content hidden">
               (<span id="moral_${doc.id}">${doc.data()?.moral})</span> - ${doc.data()?.content} <span onclick="seeLess('${doc.id}')" class="seeMore"> See less</span>
             </p>
           </div>
