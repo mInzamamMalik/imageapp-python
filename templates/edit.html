@@ -122,8 +122,7 @@
 
   .stories {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
   }
 
   .post {
@@ -131,16 +130,17 @@
     padding: 10px;
     border: 2px solid black;
     border-radius: 15px;
-    width: 26em;
+    /* width: 26em; */
     display: flex;
     flex-direction: column;
     align-items: center;
     font-family: sans-serif;
   }
 
-  .post>img {
-    max-height: 150px;
-    border-radius: inherit;
+  .post .img {
+    max-height: 100px;
+    border-radius: 15px;
+    margin-left: 10px;
   }
 
   .post>.title {
@@ -150,6 +150,16 @@
     display: flex;
     align-items: baseline;
     justify-content: space-between;
+  }
+
+  .post .text {
+    display: flex;
+    align-items: center;
+  }
+
+  .post .text .heading {
+    align-self: flex-end;
+    margin-left: 10px;
   }
 
   .post .threeDot {
@@ -197,7 +207,7 @@
     height: 1.7em;
   }
 
-  .post .content{
+  .post .content {
     align-self: flex-start;
   }
 
@@ -214,7 +224,7 @@
     display: none
   }
 
-  .post .toolsCluster {
+  .toolsCluster {
     display: flex;
     justify-content: center;
     cursor: default;
@@ -296,7 +306,6 @@
         stories.innerHTML += `
           <div class="post" id="${doc.id}">
 
-            <img src='${doc.data()?.picture}'/>
             <div class="title">
               
               <div class="text">
@@ -307,8 +316,9 @@
                   value="${doc.id}" 
                   onclick="checkBoxClick(event)" 
                 />
+                <img src='${doc.data()?.picture}' class="img"/>
 
-                <span id="title_${doc.id}"> 
+                <span id="title_${doc.id}" class="heading"> 
                   ${doc.data()?.title} 
                 </span>
               </div>
@@ -331,9 +341,7 @@
             <p id="long_content_${doc.id}" class="content hidden">
               (<span id="moral_${doc.id}">${doc.data()?.moral})</span> - ${doc.data()?.content} <span onclick="seeLess('${doc.id}')" class="seeMore"> See less</span>
             </p>
-          </div>
-          <br />
-          <br />
+          </div>          
         `;
       });
     }
