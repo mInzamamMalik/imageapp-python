@@ -286,8 +286,8 @@
             let url = await getDownloadURL(storageRef)
 
             const form = new FormData();
-            form.append('titleSmall', document.getElementById("title").value);
-            form.append('title', document.getElementById("title").value.toLowerCase());
+            form.append('titleSmall', document.getElementById("title").value.toLowerCase());
+            form.append('title', document.getElementById("title").value);
             form.append('content', document.getElementById("textarea").value);
             form.append('picture', url);
             form.append('moral', document.querySelector("#moral").innerHTML);
