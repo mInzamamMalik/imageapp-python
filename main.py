@@ -21,6 +21,11 @@ from datetime import timedelta
 from flask import session, app
 import time
 
+import os
+import urllib.request
+import datetime
+
+
 # access database 
 databaseURL = 'https://read-me-a-story3-default-rtdb.firebaseio.com/'
 
@@ -279,5 +284,79 @@ def prediction():
     return pred
 
 
+
+@app.route('/download_model', methods=['GET'])
+def download_file():
+    url = 'https://firebasestorage.googleapis.com/v0/b/sysborg-air.appspot.com/o/model%2Fpytorch_model.bin?alt=media&token=5eaa3b0d-cc85-4abf-aff5-8a1d2799dd78'
+    # url = 'https://mgmotors.com.pk/storage/img/details_4/homepage_models-mg-zs-ev-new.jpg'
+    filename = "pytorch_model.bin"  # Fixed file name
+    folder = "classifier_directory"  # Folder to save the file
+
+    # Check if file with that name already exists
+    if os.path.exists(os.path.join(folder, filename)):
+        return jsonify({'error': 'File already exists'}), 400
+    
+    # Download file from URL and save it in the specified folder with the fixed name
+    try:
+        urllib.request.urlretrieve(url, os.path.join(folder, filename))
+        return jsonify({'message': 'File downloaded successfully'}), 200
+    except Exception as e:
+        print(e)
+        return jsonify({'error': str(e)}), 500
+
+def auto_download_file():
+    url = 'https://firebasestorage.googleapis.com/v0/b/sysborg-air.appspot.com/o/model%2Fpytorch_model.bin?alt=media&token=5eaa3b0d-cc85-4abf-aff5-8a1d2799dd78'
+    filename = "pytorch_model.bin"  # Fixed file name
+    folder = "classifier_directory"  # Folder to save the file
+
+    # Check if file with that name already exists
+    if os.path.exists(os.path.join(folder, filename)):
+        print( 'error: File already exists')
+    else:
+        # Download file from URL and save it in the specified folder with the fixed name
+        try:
+            urllib.request.urlretrieve(url, os.path.join(folder, filename))
+            print( 'message: File downloaded successfully')
+        except Exception as e:
+            print(e)
+            print(str(e))
+
+auto_download_file();
+
+@app.route('/delete_model', methods=['GET'])
+def delete_file():
+    filename = "pytorch_model.bin"  # Fixed file name
+    folder = "classifier_directory"  # Folder to save the file
+
+    # Check if file with that name exists
+    if not os.path.exists(os.path.join(folder, filename)):
+        return jsonify({'error': 'File not found'}), 404
+
+    # Delete the file
+    try:
+        os.remove(os.path.join(folder, filename))
+        return jsonify({'message': 'File deleted successfully'}), 200
+    except Exception as e:
+        print(e)
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/check_model')
+def check_file():
+    filename = "pytorch_model.bin"  # Fixed file name
+    folder = "classifier_directory"  # Folder to save the file
+    file_path = os.path.join(folder, filename)
+    if os.path.exists(file_path):
+        try:
+            # Get the file size
+            file_size = os.path.getsize(file_path)
+            # Get the last modified date of the file
+            last_modified = datetime.datetime.fromtimestamp(os.path.getmtime(file_path)).strftime('%Y-%m-%d %H:%M:%S')
+            return f"File name: {filename}, File size: {file_size} (file size should be: 498669549), Last modified: {last_modified}"
+        except OSError as e:
+            return str(e)
+    else:
+        return f"File {filename} does not exist"
+    
+
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

@@ -18,12 +18,14 @@
 #     runtime_version: "3.9"
 
 runtime: python39
-service: aistd
+service: aistdlimited
 instance_class: F4_1G
-
+automatic_scaling:
+    min_instances: 1
+    max_instances: 1
 
 handlers:
 - url: .*
   script: auto
 
-entrypoint: gunicorn -b :$PORT main:app
+entrypoint: gunicorn --timeout 600 -b :$PORT main:app

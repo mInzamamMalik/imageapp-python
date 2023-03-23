@@ -8,3 +8,6 @@ view app in browser: `gcloud app browse --project=read-me-a-story3`
 view logs: `gcloud app logs tail -s default`
 
 
+run locally: `python3 -m gunicorn --timeout 600 -b :3000 main:app`
+
+
