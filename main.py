@@ -54,18 +54,6 @@ auth = firebase.auth()
 app.secret_key = 'secret'
 
 
-# In[2]:
-
-
-
-
-# In[3]:
-
-
-# In[4]:
-# Create torch dataset
-
-
 class Dataset(torch.utils.data.Dataset):
     def __init__(self, encodings, labels=None):
         self.encodings = encodings
@@ -81,12 +69,6 @@ class Dataset(torch.utils.data.Dataset):
     def __len__(self):
         return len(self.encodings["input_ids"])
 
-
-# In[ ]:
-
-# In[ ]:
-
-# log in
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -300,7 +282,7 @@ def prediction():
 # In[ ]:
 if __name__ == "__main__":
     # app.debug = True
-    app.run(debug=True, port=5001)
-
-
-# In[ ]:
+    app.run()
+else:
+    gunicorn_app = app()
+# https://stackoverflow.com/a/51397334

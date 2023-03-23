@@ -1,0 +1,19 @@
+
+# https://github.com/GoogleCloudPlatform/python-docs-samples/blob/5970e991091034cd0c71654476230b035d32f19d/appengine/standard_python3/building-an-app/building-an-app-1/app.yaml
+# runtime: python311
+# service: abcd
+
+# entrypoint: gunicorn -b :$PORT main:gunicorn_app
+
+
+
+runtime: python
+service: default
+
+env: flex
+entrypoint: gunicorn -b :$PORT main:gunicorn_app
+
+runtime_config:
+    operating_system: "ubuntu18"
+    runtime_version: "3.9"
+
