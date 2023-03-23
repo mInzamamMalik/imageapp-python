@@ -7,13 +7,23 @@
 
 
 
-runtime: python
-service: default
+# runtime: python
+# service: default
 
-env: flex
-entrypoint: gunicorn -b :$PORT main:gunicorn_app
+# env: flex
+# entrypoint: gunicorn -b :$PORT main:gunicorn_app
 
-runtime_config:
-    operating_system: "ubuntu18"
-    runtime_version: "3.9"
+# runtime_config:
+#     operating_system: "ubuntu18"
+#     runtime_version: "3.9"
 
+runtime: python39
+service: aistd
+instance_class: F4_1G
+
+
+handlers:
+- url: .*
+  script: auto
+
+entrypoint: gunicorn -b :$PORT main:app

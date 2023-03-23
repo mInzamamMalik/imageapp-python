@@ -279,10 +279,5 @@ def prediction():
     return pred
 
 
-# In[ ]:
-if __name__ == "__main__":
-    # app.debug = True
+if __name__ == '__main__':
     app.run()
-else:
-    gunicorn_app = app()
-# https://stackoverflow.com/a/51397334
