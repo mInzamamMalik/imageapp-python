@@ -14,30 +14,38 @@
 
     <nav class="topnav">
 
+      <a href="{{ url_for('options') }}">Home </a></li>
       <a href="{{ url_for('hello') }}">Add story</a></li>
-      <a href="Employee Log-in.php">Edit story</a></li>
-      <a href="{{ url_for('delete') }}">Delete story</a></li>
+      <a href="{{ url_for('edit') }}">Edit&Delete </a></li>
       <a href="{{ url_for('logout') }}">Logout</a></li>
 
   </div>
 
 </header>
 <style>
-  .button2 {
-    background: #C69A6F;
-    line-height: 30px;
-    padding: 20px 40px;
-    font-size: 24px;
-    color: white;
-    text-decoration: none;
-    border-radius: 10px;
-    margin: 4px 2px;
-    cursor: pointer;
-    -webkit-transition-duration: 0.4s;
-    /* Safari */
-    transition-duration: 0.4s;
-    gap: 50px;
-  }
+    @import url(https://fonts.googleapis.com/css?family=Open+Sans:300);
+* {
+  font-family: 'Open Sans', sans-serif;
+}
+.button2 {
+        background: #FF914D;
+        line-height: 20px;
+        padding: 5px 15px;
+        font-size: 16px;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        margin: 1px 1px;
+        cursor: pointer;
+        -webkit-transition-duration: 0.4s;
+        /* Safari */
+        transition-duration: 0.4s;
+        gap: 50px;
+        width: 150px;
+        border: none;
+    outline: none;
+    margin-left: 10px;
+    }
 
   #content {
     width: 2000px;
@@ -56,63 +64,60 @@
   }
 
   nav {
-    display: flex;
-    justify-content: center;
+        display: flex;
+        justify-content: center;
+        font-size: 1em;
+        flex-wrap: wrap;
+        width: 100%;
 
-    font-size: 1em;
-    flex-wrap: wrap;
-    width: 100%;
+    }
 
-  }
+    nav.topnav a {
 
-  nav.topnav a {
-
-    padding: 8px 25px;
-    text-decoration: none;
-    font-size: 17px;
-    background: #C69A6F;
-    border-radius: 20px;
-    color: aliceblue;
+        padding: 8px 25px;
+        text-decoration: none;
+        font-size: 17px;
+        border-radius: 20px;
+        color: aliceblue;
 
 
-  }
+    }
 
-  nav.topnav a:hover {
-    background-color: #C69A6F;
-    color: black;
-  }
+    nav.topnav a:hover {
+        background: rgba(20, 40, 40, .95);
+    }
 
-  nav.topnav {
-    overflow: hidden;
-    background: #C69A6F;
-
-
-  }
-
-  #logo {
-    width: 1000px;
-    height: 1000px;
-    border-radius: 20px;
-  }
+    nav.topnav {
+        overflow: hidden;
+        background: rgba(20, 40, 40, .95);
 
 
-  .navs {
-    list-style: none;
-  }
+    }
 
-  .navs li {
-    display: inline-table;
-  }
+    #logo {
+        width: 1000px;
+        height: 1000px;
+        border-radius: 20px;
+    }
 
-  .navs li a {
-    text-align: center;
-    padding: 10px 30px;
-    text-decoration: none;
-    font-size: 20px;
-    background: #C69A6F;
-    border-radius: 20px;
-    color: aliceblue
-  }
+
+    .navs {
+        list-style: none;
+    }
+
+    .navs li {
+        display: inline-table;
+    }
+
+    .navs li a {
+        text-align: center;
+        padding: 10px 30px;
+        text-decoration: none;
+        font-size: 20px;
+        background: rgba(20, 40, 40, .95);
+        border-radius: 20px;
+        color: aliceblue
+    }
 
   #logo {
     width: 1000px;
@@ -123,29 +128,39 @@
   .stories {
     display: flex;
     flex-direction: column;
+    box-shadow: 0 0 40px -10px rgba(0, 0, 0, .4);
+    border-radius: 12px;
   }
 
   .post {
     margin: 10px;
-    padding: 10px;
-    border: 2px solid black;
-    border-radius: 15px;
-    /* width: 26em; */
+    padding: 7px;
+    border-radius: 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
     font-family: sans-serif;
+    background-color:#bd9f82;
+    color: black;
+    box-shadow: 0 0 40px -10px rgba(0, 0, 0, .4);
+    width: 95%;
   }
+
+  .post:hover{
+  background-color: #b3906f ;
+  
+}
 
   .post .img {
     max-height: 100px;
-    border-radius: 15px;
+    border-radius: 5px;
     margin-left: 10px;
   }
 
   .post>.title {
     width: 98%;
     font-size: 2em;
+    font-weight: bold;
 
     display: flex;
     align-items: baseline;
@@ -155,11 +170,12 @@
   .post .text {
     display: flex;
     align-items: center;
+   
   }
 
   .post .text .heading {
     align-self: flex-end;
-    margin-left: 10px;
+    margin-left: 20px;
   }
 
   .post .threeDot {
@@ -230,37 +246,48 @@
     cursor: default;
     height: 30px;
   }
+
+  .filter {
+    margin-right: 15px;
+    float: right;
+
+  }
 </style>
 
-<body
-  style="font-size: 22px; background-image: url('https://images.unsplash.com/photo-1588580000645-4562a6d2c839?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80')  ;background-size: cover;">
+<body style="background-image: url('https://wallpapercave.com/dwp2x/wp2151545.jpg');">
   <br> <br>
-  <main style="background: #dbcaba;">
-    <img src="{{url_for('static', filename='logo.png')}}" style="float: center; width:200px; height: 9100x; border-radius: 20px;
+  <main style=" background: rgba(20, 40, 40, .93); color: white;">
+    <img src="{{url_for('static', filename='logo1.png')}}" style="float: center; width:200px; height: 9100x; border-radius: 20px;
                   padding: 2px;
-                    "   />
-    <h1 style="color:#a8703b; text-align:center;">Edit</h1>
-    <input type="text" id="searchTerm" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
-
-
-    <!-- {% with messages = get_flashed_messages(category_filter=["category2"]) %}
-    {% if messages %}
-    {% for message in messages %}
-    <ul id="myUL">
-      <li style="color:white;  background: #C69A6F;"><a href="{{ url_for('editform') }}">{{ message }}</a> </li>
-    </ul>
-
-    {% endfor %}
-    {% endif %}
-    {% endwith %} -->
+                    "   />
+    <h1 style=" text-align:center;">Edit & Delete</h1>
+   <label style=" text-align:center; display:inline-block; font-weight: bold;   margin-left: 15px" >Search:</label> <input type="text" id="searchTerm" onkeyup="myFunction()" placeholder="Search for story.." title="Type in a name" style="display:inline-block;"> 
+   
+   <div id="filter" class="filter">
+    <label for="morals">Moral:</label>
+    <select id="Ultra" onchange="run()"> 
+      <option value="" disabled selected>Select your moral</option>
+      <option value="All">All</option>
+      <option value="Brave">Brave</option>
+      <option value="Friendship">Friendship</option>
+      <option value="Respect">Respect</option>
+      <option value="Honesty">Honesty</option>
+      <option value="Patience">Patience</option>
+      
+    </select>
+   </div>
+    <hr>
 
     <br>
+    <button class="button button2" id="select-all" value="Select all" onclick="checkAllEvent(); changeVal();">Select all</button>
 
-    <div class="toolsCluster">
-      <span id="deleteSelectedButton" class="material-symbols-outlined hidden" onclick="deleteSelected()">
+    <div class="toolsCluster" style="float: left; margin-left: 30px">
+      <br><span id="deleteSelectedButton" class="material-symbols-outlined hidden"   onclick="deleteSelected()">
         delete
       </span>
+     
     </div>
+    
     <div id="stories" class="stories">
 
     </div>
@@ -295,17 +322,15 @@
     const storage = getStorage(app, "gs://read-me-a-story3.appspot.com");
     const db = getFirestore(app);
 
-
+    // function to load all of the books within the database
     const getData = async () => {
       const querySnapshot = await getDocs(collection(db, "books"));
       let stories = document.querySelector("#stories");
 
       querySnapshot.forEach((doc) => {
-        // console.log(`${doc.id} => `, doc.data());
 
         stories.innerHTML += `
           <div class="post" id="${doc.id}">
-
             <div class="title">
               
               <div class="text">
@@ -317,13 +342,11 @@
                   onclick="checkBoxClick(event)" 
                 />
                 <img src='${doc.data()?.picture}' class="img"/>
-
                 <span id="title_${doc.id}" class="heading"> 
                   ${doc.data()?.title} 
                 </span>
               </div>
               
-
               <div class="threeDot">
                 <img src="/static/three-dots.png" />
                 <div class="menu">
@@ -335,9 +358,8 @@
             </div>
             
             <p id="short_content_${doc.id}" class="content">
-              (${doc.data()?.moral}) - ${doc.data()?.content.slice(0, 255)}... <span onclick="seeMore('${doc.id}')" class="seeMore"> See more</span>
+              (${doc.data()?.moral}) - ${doc.data()?.content.slice(0, 230)}... <span onclick="seeMore('${doc.id}')" class="seeMore"> See more</span>
             </p>
-
             <p id="long_content_${doc.id}" class="content hidden">
               (<span id="moral_${doc.id}">${doc.data()?.moral})</span> - ${doc.data()?.content} <span onclick="seeLess('${doc.id}')" class="seeMore"> See less</span>
             </p>
@@ -346,17 +368,115 @@
       });
     }
     getData();
+    // function to load all of the books within the database corresponding to the moral selected by the admin
+    window.run = async () => {
+      document.getElementById("deleteSelectedButton").classList.add('hidden');
+      var elem = document.getElementById("select-all");
+      if (elem.textContent=="De-select all") elem.textContent = "Select all";
+      else elem.textContent = "select all"; 
+      var morale = document.getElementById("Ultra").value;
+      const q = query(collection(db, "books"), where("moral", "==", morale));
+      const querySnapshot = await getDocs(q);
+      let stories = document.querySelector("#stories");
+      stories.innerHTML = "";
+      if(morale != "All")
+      {
+      querySnapshot.forEach((doc) => {
 
+        stories.innerHTML += `
+          <div class="post" id="${doc.id}">
+            <div class="title">
+              
+              <div class="text">
+                <input 
+                  class="deleteCheck" 
+                  type="checkbox" 
+                  name="deleteCheck" 
+                  value="${doc.id}" 
+                  onclick="checkBoxClick(event)" 
+                />
+                <img src='${doc.data()?.picture}' class="img"/>
+                <span id="title_${doc.id}" class="heading"> 
+                  ${doc.data()?.title} 
+                </span>
+              </div>
+              
+              <div class="threeDot">
+                <img src="/static/three-dots.png" />
+                <div class="menu">
+                  <div class="menuItem" onClick="editPost('${doc.id}')">Edit</div>
+                  <hr class="menuItemDivider"/>
+                  <div class="menuItem" onClick="deletePost('${doc.id}')">Delete</div>
+                </div>
+              </div>
+            </div>
+            
+            <p id="short_content_${doc.id}" class="content">
+              (${doc.data()?.moral}) - ${doc.data()?.content.slice(0, 230)}... <span onclick="seeMore('${doc.id}')" class="seeMore"> See more</span>
+            </p>
+            <p id="long_content_${doc.id}" class="content hidden">
+              (<span id="moral_${doc.id}">${doc.data()?.moral})</span> - ${doc.data()?.content} <span onclick="seeLess('${doc.id}')" class="seeMore"> See less</span>
+            </p>
+          </div>          
+        `;
+      });
+   }
+   else{
+      const querySnapshot = await getDocs(collection(db, "books"));
+      stories.innerHTML = "";
+      querySnapshot.forEach((doc) => {
+
+        stories.innerHTML += `
+          <div class="post" id="${doc.id}">
+            <div class="title">
+              
+              <div class="text">
+                <input 
+                  class="deleteCheck" 
+                  type="checkbox" 
+                  name="deleteCheck" 
+                  value="${doc.id}" 
+                  onclick="checkBoxClick(event)" 
+                />
+                <img src='${doc.data()?.picture}' class="img"/>
+                <span id="title_${doc.id}" class="heading"> 
+                  ${doc.data()?.title} 
+                </span>
+              </div>
+              
+              <div class="threeDot">
+                <img src="/static/three-dots.png" />
+                <div class="menu">
+                  <div class="menuItem" onClick="editPost('${doc.id}')">Edit</div>
+                  <hr class="menuItemDivider"/>
+                  <div class="menuItem" onClick="deletePost('${doc.id}')">Delete</div>
+                </div>
+              </div>
+            </div>
+            
+            <p id="short_content_${doc.id}" class="content">
+              (${doc.data()?.moral}) - ${doc.data()?.content.slice(0, 230)}... <span onclick="seeMore('${doc.id}')" class="seeMore"> See more</span>
+            </p>
+            <p id="long_content_${doc.id}" class="content hidden">
+              (<span id="moral_${doc.id}">${doc.data()?.moral})</span> - ${doc.data()?.content} <span onclick="seeLess('${doc.id}')" class="seeMore"> See less</span>
+            </p>
+          </div>          
+        `;
+      });
+   }
+    }
+    // function for when the admin clicks on see more for the book
     window.seeMore = (id) => {
       document.getElementById(`short_content_${id}`).classList.add("hidden")
       document.getElementById(`long_content_${id}`).classList.remove("hidden")
     }
+    // function for when the admin clicks on see less for the book
     window.seeLess = (id) => {
       document.getElementById(`short_content_${id}`).classList.remove("hidden")
       document.getElementById(`long_content_${id}`).classList.add("hidden")
     }
 
-
+    // function for when the admin clicks to edit the book which will place the books info into the input fields inside the form
     window.editPost = (id) => {
 
       if (document.getElementById('editForm')) return;
@@ -371,34 +491,36 @@
         
         
         <label for="editTitle"> Title:</label> 
-        <input id="editTitle" type="text" size="35" required value="${title}">
-        
-        <br />
+        <input id="editTitle" type="text" size="50"  onblur="validateTitle()" required value="${title}"><br>
+       
+        <span style="color: red" id="title_error_message"></span>
+        <br /> <br>
         <label for="editContent"> Text:</label> 
-        <textarea id="editContent" onblur="reClassify()" cols="30" rows="10">${content}</textarea>
+        <textarea id="editContent" onblur="reClassify()" cols="100" rows="45">${content}</textarea>
         
         <br />
         <label for="editMoral"> Moral:</label> <span id="reClassifyIndicator"></span> 
-        <input disabled id="editMoral" type="text" size="35" required value="${moral}">
+        <input disabled id="editMoral" type="text" size="50" required value="${moral}">
         <button id="classifyButton" onclick="reClassifyClick(event)">classify content</button>
-
         <br />
         <br />
         <label for="editPicture"> Picture:</label> 
         <input id="editPicture" type="file">
-        <br />
-
-        <button>submit</button>
+        <br /><br>
+        <button >  <a href="{{ url_for('edit') }}" > cancel</a> </button>
+        <button value="submit" id="submit" >submit</button>
+        
       </form>`
     }
-
-    window.deletePost = async (id) => {
+ 
+      // function for when the admin clicks to delete the book which will delete it from the database
+      window.deletePost = async (id) => {
       if (confirm("Are you sure you want to delete?")) {
         await deleteDoc(doc(db, "books", id));
         location.reload();
       }
     }
-
+    // function for when the admin clicks checkboxes to delete one or more books which will add the books id to array
     window.toBeDeleted = [];
     window.checkBoxClick = (event) => {
 
@@ -406,18 +528,88 @@
       const isChecked = event.target.checked
 
       if (isChecked) {
-        toBeDeleted.push(id)
-      } else {
+       toBeDeleted.push(id)
+      }else {
         toBeDeleted = toBeDeleted.filter(x => x !== id);
       }
-      console.log("toBeDeleted: ", toBeDeleted);
 
       if (toBeDeleted.length) {
         document.getElementById("deleteSelectedButton").classList.remove('hidden')
       } else {
         document.getElementById("deleteSelectedButton").classList.add('hidden')
       }
+      } 
+
+      // function to change value of Select all button to De-select all when it is clicked
+      // reference: https://stackoverflow.com/questions/10671174/changing-button-text-onclick
+      window.changeVal = (event) => {
+      var elem = document.getElementById("select-all");
+      if (elem.textContent=="De-select all") elem.textContent = "Select all";
+      else elem.textContent = "De-select all"; }
+   
+   // function for when the admin clicks on the Select all button which will add all the books id to array corresponding to the moral selected
+   window.checkAllEvent = async (id) => {
+    var checkboxes = document.querySelectorAll('input[type=checkbox]');
+    var morale = document.getElementById("Ultra").value;
+  
+    var h = 0;
+    for(var i=0; i<checkboxes.length; i++){
+        if(checkboxes[i].checked)
+        h += 1;
     }
+    if(h==checkboxes.length && (morale =="" || morale == "All")) {
+    for(var j=0; j<checkboxes.length; j++){
+        checkboxes[j].checked = false;
+    }
+    // delete selected stories from database using js reference : https://www.youtube.com/watch?v=4ToYGY0jp9w
+
+    document.getElementById("deleteSelectedButton").classList.add('hidden');
+    const querySnapshot = await getDocs(collection(db, "books"));
+      let stories = document.querySelector("#stories");
+      querySnapshot.forEach((doc) => {
+         toBeDeleted.pop(doc.id)
+   });
+   }
+   else if(h==checkboxes.length && (morale !="" || morale != "All"))
+   {
+      for(var j=0; j<checkboxes.length; j++){
+        checkboxes[j].checked = false;
+    }
+    document.getElementById("deleteSelectedButton").classList.add('hidden');
+    const q = query(collection(db, "books"), where("moral", "==", morale));
+    const querySnapshot = await getDocs(q);
+
+      querySnapshot.forEach((doc) => {
+         toBeDeleted.pop(doc.id)
+   }); 
+   }
+    else if(morale == "Friendship" || morale == "Patience" || morale == "Honesty" || morale == "Brave" || morale == "Respect"){
+    for(var y=0; y<checkboxes.length; y++){
+        checkboxes[y].checked = true;
+    }
+    document.getElementById("deleteSelectedButton").classList.remove('hidden');
+    const q = query(collection(db, "books"), where("moral", "==", morale));
+    const querySnapshot = await getDocs(q);
+      toBeDeleted.length = 0;
+      querySnapshot.forEach((doc) => {
+         toBeDeleted.push(doc.id)
+   });
+}
+else {
+   for(var y=0; y<checkboxes.length; y++){
+        checkboxes[y].checked = true;
+    }
+   const querySnapshot = await getDocs(collection(db, "books"));
+   document.getElementById("deleteSelectedButton").classList.remove('hidden');
+   toBeDeleted.length = 0;
+   querySnapshot.forEach((doc) => {
+         toBeDeleted.push(doc.id)
+   });
+}
+      }
+
+    // function to delete all of the books selected (all books in the array)
+    // reference: https://www.youtube.com/watch?v=w_VHabMAM1c
     window.deleteSelected = async () => {
       if (confirm(`Are you sure to delete the ${toBeDeleted.length} selected stories?`)) {
 
@@ -429,7 +621,33 @@
         })
       }
     }
+    // function to check if book has a duplicate in the database already or not by checking title name
+    window.validateTitle = async () => {
+            const title = document.getElementById("editTitle").value
+            if (!title) return;
 
+            const titleSmall = title.toLowerCase();
+            const citiesRef = collection(db, "books");
+            const q = query(citiesRef, where("titleSmall", "==", titleSmall));
+
+            document.getElementById("title_error_message").innerHTML = "checking..."
+
+            const querySnapshot = await getDocs(q);
+
+
+            if (querySnapshot.size !== 0) { //  duplicate found
+
+                document.getElementById("title_error_message").innerHTML = "Duplicate title"
+                document.getElementById("submit").setAttribute("disabled", "true");
+                document.getElementById("submit").style.backgroundColor = '#d1d1d1';
+                
+            } else { // no duplicate found
+                document.getElementById("title_error_message").innerHTML = ""
+                document.getElementById("submit").removeAttribute("disabled");
+                document.getElementById("submit").style.backgroundColor = '#FF914D';
+            }
+        }
+    // when the admin edits the book and submits the form, this function will initiate and replace old values in the database with new values entered by admin
     window.completeEdit = async () => {
       const id = document.getElementById('editId').value
       const title = document.getElementById('editTitle').value
@@ -442,7 +660,6 @@
       document.getElementById('editContent').value = content
       document.getElementById('editMoral').value = moral
 
-      console.log("uploadFile");
 
       let update = {
         title: title,
@@ -452,7 +669,6 @@
       }
 
       if (picture?.files[0]?.name) {
-        console.log("file detected");
         const storageRef = ref(storage, `${new Date().getTime()}-${picture.files[0]?.name}`);
         let snapshot = await uploadBytes(storageRef, picture.files[0])
         update.picture = await getDownloadURL(storageRef)
@@ -462,14 +678,13 @@
       location.reload();
 
     }
-
+    // function to reclassify moral after book info has been edited by admin 
     window.reClassify = () => {
       document.querySelector("#classifyButton").innerHTML = "re-classifying..."
       const form = new FormData();
       form.append('content', document.querySelector("#editContent").value);
 
       axios.post("/Add_pred", form).then(response => {
-        console.log(response.data);
         document.querySelector("#editMoral").value = response.data
         document.querySelector("#classifyButton").innerHTML = "classify content"
 
@@ -478,7 +693,7 @@
         alert("Failed to add, check developer logs");
       })
     };
-
+    // function to reclassify moral after admin clicks on reclassify button
     window.reClassifyClick = (event) => {
       event.preventDefault();
       document.querySelector("#classifyButton").innerHTML = "re-classifying..."
@@ -487,7 +702,6 @@
       form.append('content', document.querySelector("#editContent").value);
 
       axios.post("/Add_pred", form).then(response => {
-        console.log(response.data);
         document.querySelector("#editMoral").value = response.data
         document.querySelector("#classifyButton").innerHTML = "classify content"
       }).catch(e => {
@@ -496,7 +710,7 @@
       })
     }
 
-
+    // function to search for books reference : https://www.w3schools.com/howto/howto_js_filter_lists.asp
     window.myFunction = function () {
       var searchTerm, li, a, i, txtValue;
       searchTerm = document.getElementById("searchTerm").value;
@@ -514,6 +728,9 @@
       }
     }
 
+   
+
+    
 
   </script>
 </body>

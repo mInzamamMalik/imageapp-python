@@ -1,155 +1,350 @@
-
 <html>
-  <head>
-    <title> Options</title>
+
+<head>
+  <title> Options</title>
 </head>
 <header>
- 
-    
-    
-    <div id="header" style="border-radius: 20px;"> 
-        
-        <nav class="topnav">
-        
-          <a href="{{ url_for('hello') }}" >Add story</a></li>
-            <a href="Employee Log-in.php">Edit story</a></li>
-            <a href="{{ url_for('delete') }}">Delete story</a></li>
-            <a href="{{ url_for('logout') }}" >Logout</a></li>
-        
-    </div>
-    
-    </header>
-    <style>
-      .button2  {
-	background: #C69A6F;
-	line-height: 30px;
-	padding: 20px 40px;
-	font-size: 24px;
-	color: white;
-	text-decoration: none;
-	border-radius: 10px;
-  margin: 4px 2px;
-          cursor: pointer;
-          -webkit-transition-duration: 0.4s; /* Safari */
-          transition-duration: 0.4s;
-          gap: 50px;
-}
-      #content {
-	width: 990px;
-	max-width: 990px;
-	min-height: 570px;
-	background: #dbcaba;
-	margin: 100px auto;
-	border-radius: 20px;
-	overflow: hidden
-}
 
-        
-        
-        .button2:hover {
-          box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
-        }
-        
-        nav {
-          display: flex;
-          justify-content: center;
-          
-          font-size: 1em;
-          flex-wrap: wrap;
-          width: 100%;
-          
-        }
-        
-        nav.topnav a {
-          
-          padding: 8px 25px;
-            text-decoration: none;
-            font-size: 17px;
-            background: #C69A6F;
-            border-radius: 20px;
-            color: aliceblue;
-            
-            
-        }
-        
-        nav.topnav a:hover {
-          background-color: #C69A6F;
-          color: black;
-        }
-        nav.topnav {
-          overflow: hidden;
-          background:#C69A6F;
-          
-          
-        }
-        
-        #logo {
-            width:1000px;
-            height: 1000px;
-            border-radius: 20px;
-        }
-        
-        
-        .navs {
-            list-style: none;
-        }
-        
-        .navs li {
-            display: inline-table;
-        }
-        
-        .navs li a {
-            text-align: center;
-            padding: 10px 30px;
-            text-decoration: none;
-            font-size: 20px;
-            background: #C69A6F;
-            border-radius: 20px;
-            color: aliceblue
-        }#logo {
-            width:1000px;
-            height: 1000px;
-            border-radius: 20px;
-        }</style>
-<body style="font-size: 22px; background-image: url('https://images.unsplash.com/photo-1588580000645-4562a6d2c839?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80')  ;background-size: cover;">
-        <table id="content" cellpadding="10" style="border: 5px solid #C69A6F;">
-          
 
-            <tr>
-            <td  align="left">
-              <img src="{{url_for('static', filename='logo.png')}}" style="float: center; width:200px; height: 9100x; border-radius: 20px;
+
+  <div id="header" style="border-radius: 20px;">
+
+    <nav class="topnav">
+
+      <a href="{{ url_for('options') }}">Home </a></li>
+      <a href="{{ url_for('hello') }}">Add story</a></li>
+      <a href="{{ url_for('edit') }}">Edit&Delete </a></li>
+      <a href="{{ url_for('logout') }}">Logout</a></li>
+
+
+  </div>
+
+</header>
+<style>
+  @import url(https://fonts.googleapis.com/css?family=Open+Sans:300);
+
+  * {
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  .signupSection {
+
+    background-repeat: no-repeat;
+    position: absolute;
+
+    left: 15%;
+
+    width: 1000px;
+    text-align: center;
+    display: flex;
+    color: white;
+    box-shadow: 3px 10px 20px 5px rgba(0, 0, 0, .5);
+
+  }
+
+
+  .info {
+    width: 300px;
+    background: rgba(20, 40, 40, .93);
+    padding: 30px 0;
+    border-right: 5px solid rgba(30, 30, 30, .8);
+    transition: .2s;
+
+  }
+
+  h2 {
+    padding-top: 30px;
+    font-weight: 300;
+  }
+
+  p {
+    font-size: 18px;
+  }
+
+  .welcome {
+    width: 700px;
+    padding: 30px 0;
+    background: rgba(20, 40, 40, 1);
+    transition: .2s;
+    color: white;
+  }
+
+  .noBullet {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .button2 {
+    background: #FF914D;
+    line-height: 20px;
+    padding: 15px 30px;
+    font-size: 18px;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 3px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s;
+    /* Safari */
+    transition-duration: 0.4s;
+    gap: 50px;
+    width: 150px;
+    border: none;
+    outline: none;
+  }
+
+  #content {
+    width: 800px;
+    max-width: 800px;
+    min-height: 570px;
+    background: #dbcaba;
+    margin: 100px auto;
+    border-radius: 20px;
+    overflow: hidden
+  }
+
+
+
+  .button2:hover {
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    background-color: #de6f2a;
+  }
+
+  nav {
+    display: flex;
+    justify-content: center;
+
+    font-size: 1em;
+    flex-wrap: wrap;
+    width: 100%;
+
+  }
+
+  nav.topnav a {
+
+    padding: 8px 25px;
+    text-decoration: none;
+    font-size: 17px;
+    border-radius: 20px;
+    color: aliceblue;
+
+
+  }
+
+  nav.topnav a:hover {
+    background: rgba(20, 40, 40, .95);
+
+  }
+
+  nav.topnav {
+    overflow: hidden;
+    background: rgba(20, 40, 40, .95);
+
+
+  }
+
+  #logo {
+    width: 1000px;
+    height: 1000px;
+    border-radius: 20px;
+  }
+
+
+  .navs {
+    list-style: none;
+  }
+
+  .navs li {
+    display: inline-table;
+  }
+
+  .navs li a {
+    text-align: center;
+    padding: 10px 30px;
+    text-decoration: none;
+    font-size: 20px;
+    background: rgba(20, 40, 40, .95);
+    border-radius: 20px;
+    color: aliceblue
+  }
+
+  #logo {
+    width: 1000px;
+    height: 1000px;
+    border-radius: 20px;
+  }
+
+  .box2 {
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+  }
+
+  .box2:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 10px 20px 2px rgba(0, 0, 0, 0.25);
+  }
+</style>
+
+<body style="background-image: url('https://wallpapercave.com/dwp2x/wp2151545.jpg');">
+  <main> <br><br><br>
+    <div class="signupSection">
+      <div class="info">
+        <br><br><br><br><br>
+        <h2 style="font-size: 30px;">Welcome</h2>
+        <img src="{{url_for('static', filename='R2.png')}}" style="margin-left: 50px; float: center; width:250px; height: 9300x; border-radius: 20px;
               padding: 2px;
-                " />
-           
-            
-              
+                "   />
+        <p style="font-size: 20px;">Read Me A Story</p>
+      </div>
+      <table class="welcome" cellpadding="10">
 
-    
-    <form action="#">
-      <tr>
-        <td>
-      <h1 style="color:#a8703b; text-align:center;">Options</h1> <br>
-            <ul style="width: auto;height: auto ;margin-left: 200px;">
-          
-                <button class="button button2">  <a href="{{ url_for('hello') }}" > Add</a> </button>
-                <button class="button button2">  <a href="{{ url_for('edit') }}" > Edit</a> </button>
-                <button class="button button2">  <a href="{{ url_for('delete') }}" > Delete</a> </button>
-           
+        <ul class="noBullet">
+          <tr>
+            <td align="left">
+              <h1 style="text-align:center;">Overview</h1>
+          <tr>
+            <!-- how to use flash in flask reference : https://flask.palletsprojects.com/en/2.2.x/patterns/flashing/ -->
+            <td>
+              <!-- To display the total number of stories -->
+              {% with messages = get_flashed_messages(category_filter=["category1"]) %}
+              {% if messages %}
+              {% for message in messages %}
+              <div
+                style=" background-color:#BDD5C8 ; border: 1.3px solid #a3652a; width: 600px; height: 50px; margin-left: 40px;">
+                <p style="color:black; font-weight: bold; font-size: large; text-align: center;">{{ message }}</p>
+              </div>
+              {% endfor %}
+              {% endif %}
+              {% endwith %}
+              <br>
+              <!--  To display the number of stories in each moral -->
+              {% with messages = get_flashed_messages(category_filter=["category2"]) %}
+              {% if messages %}
+              {% for message in messages %}
+              <div class="box2" style=" background-color:#E3DFFD
+            ; height: 110px;
+            width: 200px;
+            border-radius: 20px;
+            margin: 10px;
+            justify-content: space-around;
+            transition: all ease 0.2s; display:inline-block">
+
+                <p style="color:black; font-weight: bold; font-size: 20px; text-align: center; ">{{ message }}</p>
+                <p style="color:black;  font-size: large; text-align: center;">Respect </p>
+              </div>
+
+              {% endfor %}
+              {% endif %}
+              {% endwith %}
+
+              {% with messages = get_flashed_messages(category_filter=["category3"]) %}
+              {% if messages %}
+              {% for message in messages %}
+              <div class="box2" style=" background-color:#D8D9CF
+            ; height: 110px;
+            width: 200px;
+            border-radius: 20px;
+            margin: 10px;
+            justify-content: space-around;
+            transition: all ease 0.2s; display:inline-block">
+
+                <p style="color:black; font-weight: bold; font-size: 20px; text-align: center; ">{{ message }}</p>
+                <p style="color:black;  font-size: large; text-align: center;">Friendship </p>
+              </div>
+
+              {% endfor %}
+              {% endif %}
+              {% endwith %}
+              {% with messages = get_flashed_messages(category_filter=["category4"]) %}
+              {% if messages %}
+              {% for message in messages %}
+              <div class="box2" style=" background-color:#FFD4B2; height: 110px;
+            width: 200px;
+            border-radius: 20px;
+            margin: 10px;
+            justify-content: space-around;
+            transition: all ease 0.2s; display:inline-block">
+
+                <p style="color:black; font-weight: bold; font-size: 20px; text-align: center; ">{{ message }}</p>
+                <p style="color:black;  font-size: large; text-align: center;">Honesty </p>
+              </div>
+
+              {% endfor %}
+              {% endif %}
+              {% endwith %}
+
+              {% with messages = get_flashed_messages(category_filter=["category5"]) %}
+              {% if messages %}
+              {% for message in messages %}
+              <div class="box2" style=" background-color:#CEEDC7 ; height: 110px;
+        width: 200px;
+        border-radius: 20px;
+        margin: 10px;
+        justify-content: space-around;
+        margin-left: 120px;
+        transition: all ease 0.2s; display:inline-block">
+
+                <p style="color:black; font-weight: bold; font-size: 20px; text-align: center; ">{{ message }}</p>
+                <p style="color:black;  font-size: large; text-align: center;">Patience </p>
+              </div>
+
+              {% endfor %}
+              {% endif %}
+              {% endwith %}
+
+              {% with messages = get_flashed_messages(category_filter=["category6"]) %}
+              {% if messages %}
+              {% for message in messages %}
+              <div class="box2" style=" background-color:#FFF6BD ; height: 110px;
+        width: 200px;
+        border-radius: 20px;
+        margin: 10px;
+        justify-content: space-around;
+       
+        transition: all ease 0.2s; display:inline-block">
+
+                <p style="color:black; font-weight: bolder; font-size: 20px; text-align: center; ">{{ message }}</p>
+                <p style="color:black;  font-size: large; text-align: center;">Brave </p>
+              </div>
+
+              {% endfor %}
+              {% endif %}
+              {% endwith %}
+              <br><br>
+              {% with messages = get_flashed_messages(category_filter=["category7"]) %}
+              {% if messages %}
+              {% for message in messages %}
+              <div
+                style=" background-color:#BDD5C8 ; border: 1.3px solid #a3652a; width: 600px; height: 50px; margin-left: 40px;">
+                <p style="color:black; font-weight: bold; font-size: large; text-align: center;">{{ message }}</p>
+              </div>
+              {% endfor %}
+              {% endif %}
+              {% endwith %}
+              <h1 style="text-align:center;">Options</h1>
+              <ul style="margin-left: 160px; ">
+
+                <button class="button button2"> <a href="{{ url_for('hello') }}"
+                    style="color: white;text-decoration: none;"> Add</a> </button>
+                <button class="button button2"> <a href="{{ url_for('edit') }}"
+                    style="color: white;text-decoration: none;"> Edit&Delete</a> </button>
+              </ul>
 
 
-</ul>
-            </form>
-           
-	</td>
-</tr>
+
+        </ul>
 
 
-</td>
-	</tr>
-</table>
-    
-    </body>
-   
-    </html>
+        </td>
+        </tr>
 
-   
+
+        </td>
+        </tr>
+      </table>
+    </div>
+
+  </main>
+
+</body>
+
+</html>

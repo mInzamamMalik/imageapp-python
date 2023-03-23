@@ -10,20 +10,7 @@
     
     </header>
     <style>
-        .button2  {
-	background: #C69A6F;
-	line-height: 30px;
-	padding: 20px 40px;
-	font-size: 24px;
-	color: white;
-	text-decoration: none;
-	border-radius: 10px;
-  margin: 4px 2px;
-          cursor: pointer;
-          -webkit-transition-duration: 0.4s; /* Safari */
-          transition-duration: 0.4s;
-          gap: 50px;
-}
+        
       #content {
 	width: 990px;
 	max-width: 990px;
@@ -35,12 +22,7 @@
 }
 
         
-        
-        .button2:hover {
-          box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
-        }
-    
-header img {
+    header img {
         float: left;
         width:150px;
         height: 9100x;
@@ -52,47 +34,99 @@ header img {
             width:100px;
             height: 100px;
             border-radius: 20px;
-        }</style>
-<body style="font-size: 22px; background-image: url('https://images.unsplash.com/photo-1588580000645-4562a6d2c839?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80')  ;background-size: cover;">
-    
-    <table id="content" cellpadding="10" style="border: 1px solid #C69A6F;">
-        <tr>
-            <td  align="left">
-              <img src="{{url_for('static', filename='logo.png')}}" style="float: center; width:200px; height: 9100x; border-radius: 20px;
-              padding: 2px;
-                " />
-            </td>
-              
-            </tr>
-        <tr>
-            <td>
+        }
         
+    .login-box{
+    width: 450px;
+    height: 465px;
+    background: rgba(20, 40, 40, .9);
+    color: #fff;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    box-sizing: border-box;
+    padding: 70px 30px;
+   }
+
+   .avatar{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: absolute;
+    top: -50px;
+    left: calc(50% - 50px);
+}
+  h1{
+    margin: 0;
+    padding: 0 0 20px;
+    text-align: center;
+    font-size: 22px;
+   }
+  .login-box p{
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    }
+ .login-box input{
+    width: 100%;
+    margin-bottom: 20px;
+   }
+ .login-box input[type="text"], input[type="password"]
+   {
+    border: none;
+    border-bottom: 1px solid #fff;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color: #fff;
+    font-size: 16px;
+   }
+ .login-box input[type="submit"]
+    {
+    border: none;
+    outline: none;
+    height: 40px;
+    background: #FF914D;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 15px;
+   }
+ .login-box input[type="submit"]:hover
+  {
+    cursor: pointer;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+    background-color: #de6f2a;
+      }
+        
+
+        </style>
+<body style="background-image: url('https://wallpapercave.com/dwp2x/wp2151545.jpg');">
+    
+           <!-- Design reference : https://www.youtube.com/watch?v=-RbkNcDwKbc -->
+                <div class="login-box">
+                <img src="{{url_for('static', filename='login2.jpg')}}" class="avatar">
+                <h1 style=" text-align:center;">Admin Login</h1> <br>
     <form action='/' method='POST' >
-        <h1 style="color:black; text-align:center;">Admin Login</h1> <br>
-            <ul style="width: auto;height: auto ;margin-left: 200px;">
-                {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    {% for message in messages %}
-                    <h3 style="color:red;">{{ message }}</h3>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %} 
-        Email: <input type='text' name='email' style="width: 70%; padding: 12px; border: 1px solid #ccc; border-radius: 4px;"><br><hr>
-
-        Password: <input type='password' name='password' style="width: 70%; padding: 12px; border: 1px solid #ccc; border-radius: 4px;"><br><hr>
-        <input align="right"  style="float: right; " value="Login" class="button button2" type="submit"  >
         
-          
-    </ul>
+       
+        <p>Email</p>
+        <input type="text" name='email' placeholder="Enter email">
+        <p>Password</p>
+        <input type="password" name="password" placeholder="Enter Password"><br><br>
+        <input  value="Log in" type="submit"  >
+        
+         <!-- how to use flash in flask reference : https://flask.palletsprojects.com/en/2.2.x/patterns/flashing/ -->
+         {% with messages = get_flashed_messages(category_filter=["category8"]) %}
+        {% if messages %}
+            {% for message in messages %}
+            <p style="color:red; text-align: center; font-weight: lighter;">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %} 
+    
 </form>
-<!-- <button onclick='document.getElementById("form").submit()'><a href="{{ url_for('options') }}" > Login </a>  -->
-
-</td>
-</tr>
-</table>
-
-    
-    
+</div> 
 </body>
 </html>
     
