@@ -7,25 +7,32 @@
 
 
 
-# runtime: python
-# service: default
+runtime: python
+service: defaultflex
 
-# env: flex
-# entrypoint: gunicorn -b :$PORT main:gunicorn_app
+env: flex
+entrypoint: gunicorn -b :$PORT main:gunicorn_app
 
-# runtime_config:
-#     operating_system: "ubuntu18"
-#     runtime_version: "3.9"
+runtime_config:
+    operating_system: "ubuntu18"
+    runtime_version: "3.9"
 
-runtime: python39
-service: aistdlimited
-instance_class: F4_1G
-automatic_scaling:
-    min_instances: 1
-    max_instances: 1
+manual_scaling:
+  instances: 1
+resources:
+  cpu: 1
+  memory_gb: 0.5
+  disk_size_gb: 10
 
-handlers:
-- url: .*
-  script: auto
+# runtime: python39
+# service: aistdlimited
+# instance_class: F4_1G
+# automatic_scaling:
+#     min_instances: 1
+#     max_instances: 1
 
-entrypoint: gunicorn --timeout 600 -b :$PORT main:app
+# handlers:
+# - url: .*
+#   script: auto
+
+# entrypoint: gunicorn --timeout 600 -b :$PORT main:app
