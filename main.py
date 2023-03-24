@@ -359,5 +359,4 @@ def prediction():
     
 
 if __name__ == '__main__':
-    # app.run() # for google app engine
-    app.run(host='0.0.0.0', port=3003) # for google compute engine
+    app.run() # for google app engine
