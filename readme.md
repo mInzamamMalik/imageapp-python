@@ -34,8 +34,8 @@ sudo apt-get upgrade
 sudo apt-get install git
 sudo apt-get install python3-pip
 
-git clone https://github.com/mInzamamMalik/google-app-engine-flask-hello-world.git
-cd google-app-engine-flask-hello-world/
+git clone https://github.com/mInzamamMalik/imageapp-python.git
+cd imageapp-python/
 
 pip install -r ./requirements.txt
 python3 main.py
@@ -44,8 +44,11 @@ python3 main.py
 copy external ip of instance and open it in new browser tab like this `http://104.999.999.222:3003/` ans see flask app running in production
 
 extras:
-to download any file from internet in ssh terminal, goto folder where you wanted it to be downloaded and run following command:
+to download a file from internet in ssh terminal, goto folder where you wanted it to be downloaded and run following command:
 
-wget -O fileName.txt https://firebasestorage.googleapis.com/v0/b/sysborg-air.appspot.com/o/model%2Fpytorch_model.bin?alt=media&token=5eaa3b0d-cc85-4abf-aff5-8a1d2799dd78
+cd classifier_directory
+
+sudo apt-get install wget
+wget -O pytorch_model.bin https://firebasestorage.googleapis.com/v0/b/sysborg-air.appspot.com/o/model%2Fpytorch_model.bin?alt=media&token=5eaa3b0d-cc85-4abf-aff5-8a1d2799dd78
 
 
