@@ -24,10 +24,12 @@
 
 </header>
 <style>
-      @import url(https://fonts.googleapis.com/css?family=Open+Sans:300);
-* {
-  font-family: 'Open Sans', sans-serif;
-}
+    @import url(https://fonts.googleapis.com/css?family=Open+Sans:300);
+
+    * {
+        font-family: 'Open Sans', sans-serif;
+    }
+
     .button2 {
         background: #FF914D;
         line-height: 20px;
@@ -43,25 +45,26 @@
         transition-duration: 0.4s;
         gap: 50px;
         border: none;
-    outline: none;
+        outline: none;
     }
 
-    .B{
-        background:#FF914D;
+    .B {
+        background: #FF914D;
         border: none;
-    outline: none;
-    height: 30px;
-    color: #fff;
-    font-size: 18px;
-    border-radius: 5px;   
-    margin: 3px 2px;
+        outline: none;
+        height: 30px;
+        color: #fff;
+        font-size: 18px;
+        border-radius: 5px;
+        margin: 3px 2px;
         cursor: pointer;
         -webkit-transition-duration: 0.4s;
         /* Safari */
         transition-duration: 0.4s;
         border: none;
-    outline: none;
+        outline: none;
     }
+
     .B:hover {
         box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
         background-color: #de6f2a;
@@ -147,10 +150,11 @@
         height: 1000px;
         border-radius: 20px;
     }
-   hr {
-    width: 86%;
-    margin-left: 0px;
-   }
+
+    hr {
+        width: 86%;
+        margin-left: 0px;
+    }
 </style>
 
 <script>
@@ -161,55 +165,58 @@
 </script>
 
 <body style="background-image: url('https://wallpapercave.com/dwp2x/wp2151545.jpg');">
-    
-        
-    <table id="content" cellpadding="10" >
+
+
+    <table id="content" cellpadding="10">
 
 
         <tr>
-            
-            <td align="left">
-                
-             <img src="{{url_for('static', filename='logo1.png')}}" style="float: center; width:200px; height: 9100x; border-radius: 20px;
-              padding: 2px;
-                "   /><br> <br>
 
-             
-             <form id="form" name="myForm" method="post" action="{{url_for('save_Data')}}"> 
-                    
-                <h1 style=" text-align:center;">Add New story</h1> 
-                 <ul style="width: auto;height: auto ;margin-left: 75px;">
-                 <label for='title'>Title:</label><br>
-                 <input type="text" name="title" id='title' required placeholder="Enter title ..."
+            <td align="left">
+
+                <img src="{{url_for('static', filename='logo1.png')}}" style="float: center; width:200px; height: 9100x; border-radius: 20px;
+              padding: 2px;
+                " /><br> <br>
+
+
+                <form id="form" name="myForm" method="post" action="{{url_for('save_Data')}}">
+
+                    <h1 style=" text-align:center;">Add New story</h1>
+                    <ul style="width: auto;height: auto ;margin-left: 75px;">
+                        <label for='title'>Title:</label><br>
+                        <input type="text" name="title" id='title' required placeholder="Enter title ..."
                             style="width: 505px; padding: 12px; border: 1px solid #ccc; border-radius: 4px;"
                             onblur="validateTitle()"><br>
-                    <span style="color: red" id="title_error_message"></span>
+                        <span style="color: red" id="title_error_message"></span>
                         <hr>
-                 <label for='story'>Content:</label><br>
-                 <textarea id="textarea" name='content' placeholder="Enter content here ....."
+                        <label for='story'>Content:</label><br>
+                        <textarea id="textarea" name='content' placeholder="Enter content here ....."
                             style="width: 515px;height: 170px;padding: 12px ;box-sizing: border-box;border: 2px solid #ccc;border-radius: 4px;background-color: #f8f8f8;font-size: 16px;resize: none;">
                         </textarea><br>
 
-                  <button id="classifyButton"class="B">Classify</button>  <span style="color: red" id="message1"></span><br> 
+                        <button id="classifyButton" class="B">Classify</button> <span style="color: red"
+                            id="message1"></span><br>
                         <audio id="audio" src="{{url_for('static', filename='audio.mp3')}}"></audio>
                         <!-- <p style="display:inline-block" >Moral: </p> <div size="50" style=" background-color:#FFD4B2 ; border: 1.3px solid #a3652a; width: 150px; height: 20px; display:inline-block"> 
                            
                             <span style="font-weight: bold; color:white "id="moral"> </span> </div> <br> -->
-                  <label for='moral'>The moral of this story is: </label>
-                            <input disabled type="text" name='moral' id='moral' value=""><br><br>
-                       
-                        <input id="cancelButton" type="submit" value="Disapprove and save in db" name="action" class="B">
+                        <label for='moral'>The moral of this story is: </label>
+                        <input disabled type="text" name='moral' id='moral' value=""><br><br>
+
+                        <input id="cancelButton" type="submit" value="Disapprove and save in db" name="action"
+                            class="B">
                         <hr>
                         <label for="picture">Upload story picture:</label><br>
                         <input type="file" name='picture' id="picture" id="picture" required /><br>
-                       <br>
+                        <br>
                     </ul>
                     <input style="float: right;" class="button button2" type="submit" value="Add" name="action1"
-                    id="add">
-                    <button  class="button button2">  <a href="{{ url_for('options') }}" style="  color: white;text-decoration: none;"  class="previous">&laquo; </a> </button>
-                    <input class="button button2" type="reset" value="Reset">  
+                        id="add">
+                    <button class="button button2"> <a href="{{ url_for('options') }}"
+                            style="  color: white;text-decoration: none;" class="previous">&laquo; </a> </button>
+                    <input class="button button2" type="reset" value="Reset">
                 </form>
-                
+
             </td>
         </tr>
     </table>
@@ -244,11 +251,11 @@
 
         console.log("script2");
 
-       // function to check if book has a duplicate in the database already or not by checking title name
+        // function to check if book has a duplicate in the database already or not by checking title name
         window.validateTitle = async () => {
             const title = document.getElementById("title").value
             if (!title) return;
-        //    case insestive string, reference : https://masteringjs.io/tutorials/fundamentals/compare-strings-ignore-case
+            //    case insestive string, reference : https://masteringjs.io/tutorials/fundamentals/compare-strings-ignore-case
             const titleSmall = title.toLowerCase();
             const citiesRef = collection(db, "books");
             const q = query(citiesRef, where("titleSmall", "==", titleSmall));
@@ -264,7 +271,7 @@
                 document.getElementById("title_error_message").innerHTML = "Duplicate title"
                 document.getElementById("add").setAttribute("disabled", "true");
                 document.getElementById("add").style.backgroundColor = '#d1d1d1';
-                
+
             } else {  // no duplicate found
                 document.getElementById("title_error_message").innerHTML = ""
                 document.getElementById("add").removeAttribute("disabled");
@@ -290,13 +297,13 @@
             form.append('content', document.getElementById("textarea").value);
             form.append('picture', url);
             form.append('moral', document.querySelector("#moral").value);
-             
+
             //  Save data in database after dissapprove story
             axios.post("/Cancel_data", form).then(response => {
                 console.log(response.data);
                 alert("story saved Successfully");
                 document.getElementById("form").reset()
-                
+
 
             }).catch(e => {
                 console.log(e);
@@ -306,7 +313,7 @@
         }, false);
 
 
-  
+
         document.getElementById("form").addEventListener("submit", uploadFile);
         async function uploadFile(event) {
             event.preventDefault()
@@ -342,7 +349,7 @@
         }
 
 
-        
+
         // classifying the story
         document.querySelector("#classifyButton").addEventListener("click", (event) => {
             event.preventDefault();
@@ -361,7 +368,7 @@
         }, false);
 
     </script>
-    
+
 </body>
 
 </html>
