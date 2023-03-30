@@ -6,3 +6,6 @@
 .DS_Store
 /__pycache__
 classifier_directory/pytorch_model.bin
+accessLog.log
+errorLog.log
+my_log_file.log

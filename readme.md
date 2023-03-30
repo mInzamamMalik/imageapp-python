@@ -37,8 +37,8 @@ sudo apt-get install python3-pip
 git clone https://github.com/mInzamamMalik/imageapp-python.git
 cd imageapp-python/
 
-pip install -r ./requirements.txt
-gunicorn -b :3003 --timeout 600 --log-level=debug main:app 
+`pip install -r ./requirements.txt`
+`gunicorn -b :3003 --timeout 600 --log-level=debug --error-log errorLog.log --access-logfile accessLog.log main:app`
 
 copy external ip of instance and open it in new browser tab like this `http://104.999.999.222:3003/` ans see flask app running in production
 
