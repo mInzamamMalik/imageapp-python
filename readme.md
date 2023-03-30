@@ -38,7 +38,7 @@ git clone https://github.com/mInzamamMalik/imageapp-python.git
 cd imageapp-python/
 
 pip install -r ./requirements.txt
-gunicorn -b :3003 main:app
+gunicorn -b :3003 --timeout 600 --log-level=debug main:app 
 
 copy external ip of instance and open it in new browser tab like this `http://104.999.999.222:3003/` ans see flask app running in production
 
