@@ -3,10 +3,20 @@
 
 `gcloud config set app/cloud_build_timeout 900` (seconds) to increase buildtime limit in flex env, this will not work in standard env, default value 600seconds
 
-deploy: `sudo gcloud app deploy --project read-me-a-story3`
+deploy: 
+```
+sudo gcloud app deploy --project read-me-a-story3
+```
 
-view app in browser: `gcloud app browse --project=read-me-a-story3`
-view logs: `gcloud app logs tail -s default`
+view app in browser: 
+```
+gcloud app browse --project=read-me-a-story3
+```
+
+view logs: 
+```
+gcloud app logs tail -s default
+```
 
 
 
@@ -29,25 +39,35 @@ https://amanranjanverma.medium.com/run-flask-app-on-gcp-compute-engine-vm-instan
 
 after creating the machine open ssh in browser window and run following command to setup machine for the first time:
 
+```
 sudo apt-get update
 sudo apt-get upgrade
 sudo apt-get install git
 sudo apt-get install python3-pip
-
+```
+```
 git clone https://github.com/mInzamamMalik/imageapp-python.git
-cd imageapp-python/
 
-`pip install -r ./requirements.txt`
-`gunicorn -b :3003 --timeout 600 --log-level=debug --error-log errorLog.log --access-logfile accessLog.log main:app`
+cd imageapp-python/
+```
+
+```
+pip install -r ./requirements.txt
+
+gunicorn -b :3003 --timeout 600 --log-level=debug --error-log errorLog.log --access-logfile accessLog.log main:app
+```
 
 copy external ip of instance and open it in new browser tab like this `http://104.999.999.222:3003/` ans see flask app running in production
 
 extras:
 to download a file from internet in ssh terminal, goto folder where you wanted it to be downloaded and run following command:
 
+```
 cd classifier_directory
 
 sudo apt-get install wget
+
 wget -O pytorch_model.bin https://firebasestorage.googleapis.com/v0/b/sysborg-air.appspot.com/o/model%2Fpytorch_model.bin?alt=media&token=5eaa3b0d-cc85-4abf-aff5-8a1d2799dd78
+```
 
 
